@@ -14,9 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _generateNamespaces: 1
   _defaultUsings:
-  - System
-  - System.Collections
-  - System.Collections.Generic
-  - System.Linq
   - UnityEngine
-  - UnityRandom = UnityEngine.Random
