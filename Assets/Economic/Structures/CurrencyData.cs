@@ -9,12 +9,15 @@ namespace Shoping
 	[Serializable]
 	public struct CurrencyData
 	{
-		public string CurrencyName;
+		public CurrencyType CurrencyType;
+
 		[Space(5)]
 		public Image Image;
         [ShowAssetPreview(32,32)] public Sprite Sprite;
+
 		[Space(2)]
 		public TMP_Text BalanceText;
 		public float BalanceValue;
+		public float BalanceDefaultValue;
 	}
 }

@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -9,8 +7,6 @@ public class EntityFollow : MonoBehaviour
     [SerializeField] private EntityFollowData _followData;
 
     private Rigidbody _body;
-    private Vector3 _velocity = Vector3.zero;
-    private float _multiplySpeed = 100;
 
     private void Start()
     {
@@ -26,8 +22,7 @@ public class EntityFollow : MonoBehaviour
 
     private void Move()
     {
-        Vector3 targetVelocity = (_followData.Target.position + _followData.Distance - transform.position) * _followData.SpeedMovementFollow * _multiplySpeed * Time.deltaTime;
-        _body.velocity = Vector3.SmoothDamp(_body.velocity, targetVelocity, ref _velocity, _followData.SmoothSpeedMovement);
+        _body.transform.position = _followData.Target.position + _followData.Distance;
     }
 
     private void Rotation()
@@ -42,7 +37,5 @@ public struct EntityFollowData
     public Transform Target;
     public Vector3 Distance;
     public Vector3 Rotation;
-    public float SpeedMovementFollow;
     [Range(0f, 1f)] public float InterpolationRation;
-    [Range(0f, 0.1f)] public float SmoothSpeedMovement;
 }
