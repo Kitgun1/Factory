@@ -13,8 +13,8 @@ namespace Shoping
 
         public void Move(Vector2 direction)
         {
-            Vector3 targetVelocity = new Vector3(direction.x, 0f, direction.y) * _data.MovementSpeed * _multiplyMove * Time.deltaTime;
-            _data.Rigidbody.velocity = Vector3.SmoothDamp(_data.Rigidbody.velocity, targetVelocity, ref _velocity, _data.MovementSmooth);
+            Vector3 targetVelocity = new Vector3(direction.x, 0f, direction.y) * _data.MovementSpeed * _multiplyMove;
+            _data.Rigidbody.velocity = Vector3.SmoothDamp(_data.Rigidbody.velocity, targetVelocity, ref _velocity, _data.MovementSmooth) * Time.deltaTime;
         }
 
         public void Rotate(Transform transform, Vector2 direction)

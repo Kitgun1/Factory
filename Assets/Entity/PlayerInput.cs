@@ -9,6 +9,7 @@ namespace Shoping
         [SerializeField] private PlayerAnimation _animation;
 
         private EntityMovement _entityMovement;
+        private Vector2 _direction = Vector2.zero;
 
         private void Awake()
         {
@@ -17,11 +18,15 @@ namespace Shoping
 
         private void Update()
         {
-            Vector2 direction = GetDirection(PlatformType.Desctop);
+            _direction = GetDirection(PlatformType.Desctop);
 
-            _entityMovement.Move(direction);
-            _entityMovement.Rotate(_movementData.Transform, direction);
-            _animation.SetAnimationFloat(AnimationParamType.Speed, GetSpeed(direction));
+            _animation.SetAnimationFloat(AnimationParamType.Speed, GetSpeed(_direction));
+        }
+
+        private void FixedUpdate()
+        {
+            _entityMovement.Move(_direction);
+            _entityMovement.Rotate(_movementData.Transform, _direction);
         }
 
         public Vector2 GetDirection(PlatformType type)
