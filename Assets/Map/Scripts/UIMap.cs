@@ -27,9 +27,13 @@ namespace Shoping
             {
                 for (int y = 0; y < sizeY; y++)
                 {
+                    int tempX = x;
+                    int tempY = y;
                     var UICell = Instantiate(_uIItem, _parent);
-                    _data[x, y].UICell = UICell;
-                    _data[x, y].CellState = CellStateType.Empty;
+                    _data[tempX, tempY].UICell = UICell;
+                    _data[tempX, tempY].CellState = CellStateType.Empty;
+                    _data[tempX, tempY].UICell.Button.onClick.RemoveAllListeners();
+                    _data[tempX, tempY].UICell.Button.onClick.AddListener(() => OnSelectCell?.Invoke(_data[tempX, tempY]));
                 }
             }
         }

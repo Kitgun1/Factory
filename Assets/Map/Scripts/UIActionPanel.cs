@@ -1,13 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Shoping
 {
     public class UIActionPanel : MonoBehaviour
     {
-        [SerializeField] private ButtonGroupData _buttonGroupBuilder;
-        [SerializeField] private ButtonGroupData _buttonGroupRotate;
+        [SerializeField] private ButtonGroupData _buttonGroupEmpty;
+        [SerializeField] private ButtonGroupData _buttonGroupFill;
 
         [SerializeField] private UIMap _uIMap;
+
+        private UIItemData _selectedCell;
+
+        private void Start()
+        {
+            ClearSelect();
+        }
 
         private void OnEnable()
         {
@@ -23,22 +32,43 @@ namespace Shoping
         {
             if (cell.CellState == CellStateType.Fill)
             {
-                for (int i = 0; i < _buttonGroupBuilder.Buttons.Count; i++)
-                {
-                    _buttonGroupBuilder.Buttons[i].interactable = true;
-                }
-                _buttonGroupRotate.GroupParent.SetActive(true);
+                SwitchGroup(_buttonGroupEmpty.Buttons, false);
+                SwitchGroup(_buttonGroupFill.Buttons, true);
             }
             else if (cell.CellState == CellStateType.Empty)
             {
-                _buttonGroupBuilder.GroupParent.SetActive(true);
-                _buttonGroupRotate.GroupParent.SetActive(false);
+                SwitchGroup(_buttonGroupEmpty.Buttons, true);
+                SwitchGroup(_buttonGroupFill.Buttons, false);
             }
             else
             {
-                _buttonGroupBuilder.GroupParent.SetActive(false);
-                _buttonGroupRotate.GroupParent.SetActive(false);
+                SwitchGroup(_buttonGroupEmpty.Buttons, false);
+                SwitchGroup(_buttonGroupFill.Buttons, false);
             }
+            _selectedCell = cell;
+        }
+
+        public void Insert(int index)
+        {
+            if (index <= 4)
+            {
+                _selectedCell.UICell.SetCell((ItemCellType)index);
+                _selectedCell.CellState = CellStateType.Fill;
+                SwitchGroup(_buttonGroupEmpty.Buttons, false);
+                SwitchGroup(_buttonGroupFill.Buttons, true);
+            }
+        }
+
+        private void SwitchGroup(List<Button> buttons, bool value)
+        {
+            for (int i = 0; i < buttons.Count; i++)
+                buttons[i].interactable = value;
+        }
+
+        private void ClearSelect()
+        {
+            SwitchGroup(_buttonGroupEmpty.Buttons, false);
+            SwitchGroup(_buttonGroupFill.Buttons, false);
         }
     }
 }
