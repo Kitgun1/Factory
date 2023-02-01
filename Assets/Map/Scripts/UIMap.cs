@@ -30,7 +30,6 @@ namespace Shoping
                     var UICell = Instantiate(_uIItem, _parent);
                     _data[x, y].UICell = UICell;
                     _data[x, y].CellState = CellStateType.Empty;
-                    OnSelectCell?.Invoke(_data[x, y]);
                 }
             }
         }

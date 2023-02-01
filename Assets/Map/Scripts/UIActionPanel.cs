@@ -26,13 +26,17 @@ namespace Shoping
                 for (int i = 0; i < _buttonGroupBuilder.Buttons.Count; i++)
                 {
                     _buttonGroupBuilder.Buttons[i].interactable = true;
-
                 }
                 _buttonGroupRotate.GroupParent.SetActive(true);
             }
             else if (cell.CellState == CellStateType.Empty)
             {
                 _buttonGroupBuilder.GroupParent.SetActive(true);
+                _buttonGroupRotate.GroupParent.SetActive(false);
+            }
+            else
+            {
+                _buttonGroupBuilder.GroupParent.SetActive(false);
                 _buttonGroupRotate.GroupParent.SetActive(false);
             }
         }
