@@ -85,9 +85,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3129512609039934099}
-  - component: {fileID: 4792103210932323902}
+  - component: {fileID: 818305314165889943}
   m_Layer: 0
-  m_Name: Image
+  m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4792103210932323902
+--- !u!114 &818305314165889943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,15 +124,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7437133985642425294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 547375a949fc10642b2e0f50c1b71fea, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fa52d786ed24b54fbeb0c64d2143c24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _conveyor: {fileID: 21300000, guid: 06eef049abb248047afdf42552812aff, type: 3}
-  _creator: {fileID: 21300000, guid: eb2e580946191134c9ae2d31e97b73a7, type: 3}
-  _saller: {fileID: 21300000, guid: 95696d31ea6b0084285e7db75a4dcf32, type: 3}
-  _default: {fileID: 0}
+  IconState: {fileID: 1680382544538463002}
   Button: {fileID: 3480537875953024635}
-  Image: {fileID: 1680382544538463002}
 --- !u!1 &8879043093343613182
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,10 +163,10 @@ RectTransform:
   m_Father: {fileID: 3129512609039934099}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.13333333, y: 0.13333334}
+  m_AnchorMax: {x: 0.86666673, y: 0.86666673}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: -40}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8040701817455752447
 CanvasRenderer:
