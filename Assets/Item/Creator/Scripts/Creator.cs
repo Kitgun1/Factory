@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace Factory
 {
     [RequireComponent(typeof(CreatorPerforms))]
-    public class Creator : Item, IRotate
+    public class Creator : Item, ITurn
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
@@ -63,7 +63,7 @@ namespace Factory
             }
         }
 
-        public void Rotate(Transform transform, Vector2 direction)
+        public void Rotate(Transform transform)
         {
             EntityTurner.Action(transform, _rotationDuration);
         }

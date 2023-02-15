@@ -9,7 +9,7 @@ public static class EntityTurner
     {
         Vector3 targetRotation = transform.rotation.eulerAngles;
 
-        targetRotation.z += _rotationStep;
+        targetRotation.y += _rotationStep;
         transform.DORotate(targetRotation, rotateDuration, RotateMode.Fast);
     }
 }
