@@ -5,11 +5,12 @@ using UnityEngine.Events;
 namespace Factory
 {
     [RequireComponent(typeof(CreatorPerforms))]
-    public class Creator : Item
+    public class Creator : Item, IRotate
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
         [SerializeField] private GameObject _object;
+        [SerializeField] private float _rotationDuration;
 
         private CreatorPerforms _performs;
 
@@ -60,6 +61,11 @@ namespace Factory
                 }
                 _materials = new List<Material>(tempLevels);
             }
+        }
+
+        public void Rotate(Transform transform, Vector2 direction)
+        {
+            EntityTurner.Action(transform, _rotationDuration);
         }
     }
 }
