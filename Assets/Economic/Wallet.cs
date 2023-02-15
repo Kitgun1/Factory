@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Shoping
+namespace Factory
 {
     public class Wallet : MonoBehaviour, IWallet
     {

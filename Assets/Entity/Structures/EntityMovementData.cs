@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Shoping
+namespace Factory
 {
     [Serializable]
     public struct EntityMovementData

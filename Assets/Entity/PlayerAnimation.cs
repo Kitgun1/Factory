@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Shoping
+namespace Factory
 {
 	public class PlayerAnimation : MonoBehaviour
 	{

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Shoping
+namespace Factory
 {
 	[Serializable]
 	public struct CurrencyData

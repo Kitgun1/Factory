@@ -1,4 +1,4 @@
-namespace Shoping
+namespace Factory
 {
 	public interface IWallet
 	{
