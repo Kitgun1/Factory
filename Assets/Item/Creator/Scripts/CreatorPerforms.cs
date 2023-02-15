@@ -8,7 +8,7 @@ namespace Factory
         [SerializeField] private Transform _creationPosition;
 
         private Creator _creator;
-        private IEnumerator _creatorEnumerator;
+        private IEnumerator _creatorEnumerator = null;
 
         private void Start()
         {
