@@ -5,7 +5,7 @@ namespace Factory
 {
     public class CreatorPerforms : MonoBehaviour
     {
-        [SerializeField] private Transform _creationPosition;
+        [SerializeField] private Transform _creationPoint;
 
         private Creator _creator;
         private IEnumerator _creatorEnumerator = null;
@@ -39,7 +39,7 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(_creator.GetCurrentSpeed());
-                // Create object
+                Instantiate(_creator.GetCurrentObject(), _creationPoint.position, Quaternion.identity, transform);
             }
         }
     }
