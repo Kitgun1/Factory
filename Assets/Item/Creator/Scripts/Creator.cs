@@ -9,12 +9,11 @@ namespace Factory
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
-        [SerializeField] private List<float> _creationsSpeed;
         [SerializeField] private GameObject _object;
 
         private CreatorPerforms _performs;
 
-        public float GetCurrentSpeed() => _creationsSpeed[Level];
+        public float GetCurrentSpeed() => Modifer[Level];
         public GameObject GetCurrentObject() => _object;
 
         private void Start()
@@ -60,20 +59,6 @@ namespace Factory
                     tempLevels.Add(null);
                 }
                 _materials = new List<Material>(tempLevels);
-            }
-
-            if (_creationsSpeed.Count > MaxLevel)
-            {
-                _creationsSpeed.RemoveRange(MaxLevel, _creationsSpeed.Count - MaxLevel);
-            }
-            else if (_creationsSpeed.Count < MaxLevel)
-            {
-                List<float> tempLevels = new List<float>(_creationsSpeed);
-                for (int i = 0; i < MaxLevel - _creationsSpeed.Count; i++)
-                {
-                    tempLevels.Add(0f);
-                }
-                _creationsSpeed = new List<float>(tempLevels);
             }
         }
     }
