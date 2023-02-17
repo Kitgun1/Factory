@@ -13,6 +13,7 @@ namespace Factory
 
         private void OnTriggerEnter(Collider other)
         {
+
             var gameObject = other.gameObject;
             if (gameObject.layer != _sortingLayer) return;
             _bodies.Add(gameObject.GetComponent<Rigidbody>());

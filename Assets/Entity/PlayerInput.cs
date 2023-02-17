@@ -11,6 +11,8 @@ namespace Factory
         private EntityMovement _entityMovement;
         private Vector2 _direction = Vector2.zero;
 
+       [SerializeField] private MapManage _mapManage;
+
         private void Awake()
         {
             _entityMovement = new EntityMovement(_movementData);
@@ -21,6 +23,8 @@ namespace Factory
             _direction = GetDirection(PlatformType.Desctop);
 
             _animation.SetAnimationFloat(AnimationParamType.Speed, GetSpeed(_direction));
+
+            _mapManage.GetNearCell(transform.position);
         }
 
         private void FixedUpdate()

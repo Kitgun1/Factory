@@ -45,8 +45,11 @@ namespace Factory
             }
         }
 
-        public Cell GetNearCell(Vector2 position)
+        public Cell GetNearCell(Vector2 position, float sizeCell, Vector2Int sizeMap, out Vector2Int positionCell)
         {
+            //Vector2 positionCell = new Vector2 (position - new Vector2(sizeMap.x, sizeMap.y)) / 2;
+            //Debug.Log(positionCell);
+            positionCell = Vector2Int.zero;
             return default;
         }
     }

@@ -12,21 +12,31 @@ namespace Factory
 
         private Map _map;
 
+        private Vector3 _nearCell = Vector3.zero;
+
         private void Start()
         {
+            Init();
         }
 
         private void Init()
         {
             _map = new Map(_defaultItem, _size.x, _size.y);
-            var platform = Instantiate(_platform, transform.position, Quaternion.identity, transform);
-            platform.transform.localScale = new Vector2(_size.x * _sizeCell, _size.y * _sizeCell);
+            var platform = Instantiate(_platform, transform.position + Vector3.down, Quaternion.identity, transform);
+            platform.transform.localScale = new Vector3(_size.x * _sizeCell, 1f, _size.y * _sizeCell);
             platform.GetComponent<MeshRenderer>().material.DOTiling(_size, 0.2f);
         }
 
         public void GetNearCell(Vector3 worldPosition)
         {
+            _map.GetNearCell(worldPosition, _sizeCell, _size, out Vector2Int pos);
+            _nearCell = new Vector3(pos.x, 1f, pos.y);
+        }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(_nearCell, Vector3.one * 0.2f);
         }
     }
 }
