@@ -1,4 +1,5 @@
 using UnityEngine;
+using KiMath;
 
 namespace Factory
 {
@@ -45,12 +46,20 @@ namespace Factory
             }
         }
 
-        public Cell GetNearCell(Vector2 position, float sizeCell, Vector2Int sizeMap, out Vector2Int positionCell)
+        public Cell GetNearCell(Vector2 position, Vector2Int sizeMap, out Vector2 worldPositionCell)
         {
-            //Vector2 positionCell = new Vector2 (position - new Vector2(sizeMap.x, sizeMap.y)) / 2;
-            //Debug.Log(positionCell);
-            positionCell = Vector2Int.zero;
-            return default;
+            worldPositionCell = (Vector2)position.RoundVector2ToVector2Int();
+
+            Vector2Int positionCell = worldPositionCell.RoundVector2ToVector2Int() + ((sizeMap - Vector2.one * 2) / 2).RoundVector2ToVector2Int();
+
+            if (positionCell.x > _cells.GetLength(0) - 1 || positionCell.x < 0)
+                positionCell.x = -1;
+            if (positionCell.y > _cells.GetLength(1) - 1 || positionCell.y < 0)
+                positionCell.y = -1;
+
+            if (positionCell.x == -1 || positionCell.y == -1) return null;
+            Debug.Log($"{_cells[positionCell.x, positionCell.y]} | {positionCell.x} ~ {positionCell.y}");
+            return _cells[positionCell.x, positionCell.y];
         }
     }
 }

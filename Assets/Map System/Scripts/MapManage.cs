@@ -7,7 +7,6 @@ namespace Factory
     {
         [SerializeField] private GameObject _platform;
         [Min(1), SerializeField] private Vector2Int _size = Vector2Int.one;
-        [SerializeField] private float _sizeCell = 1f;
         [SerializeField] private Item _defaultItem = null;
 
         private Map _map;
@@ -22,15 +21,29 @@ namespace Factory
         private void Init()
         {
             _map = new Map(_defaultItem, _size.x, _size.y);
-            var platform = Instantiate(_platform, transform.position + Vector3.down, Quaternion.identity, transform);
-            platform.transform.localScale = new Vector3(_size.x * _sizeCell, 1f, _size.y * _sizeCell);
+
+            Vector3 offset = new Vector3(0f, -0.5f, 0f);
+            if (_size.x % 2 == 0)
+                offset.x = 0.5f;
+            if (_size.y % 2 == 0)
+                offset.z = 0.5f;
+
+            var platform = Instantiate(_platform, transform.position + offset, Quaternion.identity, transform);
+            platform.transform.localScale = new Vector3(_size.x, 1f, _size.y);
             platform.GetComponent<MeshRenderer>().material.DOTiling(_size, 0.2f);
         }
 
         public void GetNearCell(Vector3 worldPosition)
         {
-            _map.GetNearCell(worldPosition, _sizeCell, _size, out Vector2Int pos);
-            _nearCell = new Vector3(pos.x, 1f, pos.y);
+            var cell = _map.GetNearCell(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell);
+            if (cell == null) return;
+            _nearCell = new Vector3(worldPositionCell.x, 0f, worldPositionCell.y);
+
+            if (cell.GetItem() == null && _defaultItem != null)
+            {
+                Instantiate(_defaultItem, _nearCell, Quaternion.identity, transform);
+                cell.TrySetItem(_defaultItem);
+            }
         }
 
         private void OnDrawGizmos()
