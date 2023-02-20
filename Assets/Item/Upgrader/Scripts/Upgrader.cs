@@ -4,18 +4,22 @@ namespace Factory
 {
 	public class Upgrader : Item
 	{
-        private void OnTriggerEnter(Collider other)
+        private Product _levelInfo;
+
+        public void Init(Product info)
         {
-            if (other.TryGetComponent(out Product product))
-                Upgrate(product);
+            _levelInfo = info;
         }
 
-        private void Upgrate(Product product)
-        {
-            ProductLevelKeeper levelInfo = ProductLevelKeeper.Instance;
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.TryGetComponent(out Product product))
+        //        UpgrateProduct(product);
+        //}
 
-            product.TryUpgradeLevel(levelInfo.MaxLevel, Modifer[Level]);
-            product.ChangeVisual(levelInfo.GetProductInfo(product.Level));
-        }
+        //private void UpgrateProduct(Product product)
+        //{
+
+        //}
     }
 }

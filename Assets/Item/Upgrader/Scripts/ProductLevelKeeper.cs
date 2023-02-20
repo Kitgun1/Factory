@@ -3,24 +3,11 @@ using UnityEngine;
 
 namespace Factory
 {
-	public class ProductLevelKeeper : MonoBehaviour
+	[CreateAssetMenu(menuName = "Products/ProductLevelKeeper", fileName = "ProductLevelKeeper", order = 1)]
+	public class ProductLevelKeeper : ScriptableObject
 	{
-        [SerializeField] private List<ProductLevelInfo> _products = new List<ProductLevelInfo>();
+		[SerializeField] private List<Product> _products = new List<Product>();
 
-        [SerializeField] public int MaxLevel => _products.Count - 1;
-        public ProductLevelInfo GetProductInfo(int level) => _products[level];
-		public static ProductLevelKeeper Instance;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
-    }
-
-    [System.Serializable]
-    public struct ProductLevelInfo
-    {
-        public Material Material;
-        public Mesh Mesh;
-    }
+		public IReadOnlyCollection<Product> Products => _products;
+	}
 }
