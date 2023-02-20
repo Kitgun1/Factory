@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Factory
 {
     [System.Serializable]
-    public struct VisualProductLevelInfo
+    public struct VisualProductInfo
     {
         public Material Material;
         public Mesh Mesh;

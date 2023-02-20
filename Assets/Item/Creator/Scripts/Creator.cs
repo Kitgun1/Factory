@@ -9,13 +9,13 @@ namespace Factory
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
-        [SerializeField] private GameObject _object;
+        [SerializeField] private Product _product;
         [SerializeField] private float _rotationDuration;
 
         private CreatorPerforms _performs;
 
         public float GetCurrentSpeed() => Modifer[Level];
-        public GameObject GetCurrentObject() => _object;
+        public Product GetCurrentObject() => _product;
 
         private void Start()
         {

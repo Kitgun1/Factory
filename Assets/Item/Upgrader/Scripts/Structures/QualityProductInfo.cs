@@ -1,7 +1,7 @@
 namespace Factory
 {
     [System.Serializable]
-    public struct QualityProductLevelInfo
+    public struct QualityProductInfo
 	{
         public int Quality;
 	}

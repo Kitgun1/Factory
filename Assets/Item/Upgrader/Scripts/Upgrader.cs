@@ -4,22 +4,22 @@ namespace Factory
 {
 	public class Upgrader : Item
 	{
-        private Product _levelInfo;
+        private ProductTemplate _levelInfo;
 
-        public void Init(Product info)
+        public void Init(ProductTemplate info)
         {
             _levelInfo = info;
         }
 
-        //private void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.TryGetComponent(out Product product))
-        //        UpgrateProduct(product);
-        //}
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out ProductTemplate product))
+                UpgrateProduct(product);
+        }
 
-        //private void UpgrateProduct(Product product)
-        //{
+        private void UpgrateProduct(ProductTemplate product)
+        {
 
-        //}
+        }
     }
 }

@@ -1,11 +1,20 @@
-using UnityEngine;
-
 namespace Factory
 {
-    [CreateAssetMenu(menuName = "Products/Quality", fileName = "Quality", order = 2)]
-    public class QualityProduct : Product
-    {
-        [SerializeField] private QualityProductLevelInfo[] _levelInfo;
-        public override int MaxLevel() => _levelInfo.Length - 1;
+	public class QualityProduct : Product
+	{
+        public float Quality { get; private set; }
+
+        QualityProductTemplate _template;
+
+        public override void Init(ProductTemplate template)
+        {
+            _template = template as QualityProductTemplate;
+            base.Init(template);
+        }
+
+        public override void UpdateInfo()
+        {
+            Quality = _template.LevelInfo[Level].Quality;
+        }
     }
 }
