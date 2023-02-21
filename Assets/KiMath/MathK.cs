@@ -5,6 +5,8 @@ namespace KiMath
 {
     public static class MathK
     {
+        #region Rounding
+
         public static int RoundFloatToInt(this float value)
         {
             if (value >= 0f && Math.Abs(value % 1) < 0.5f)
@@ -27,5 +29,17 @@ namespace KiMath
 
             return vectorInt;
         }
+
+        public static Vector3Int RoundVector3ToVector3Int(this Vector3 value)
+        {
+            Vector3Int vectorInt = new Vector3Int();
+            vectorInt.x = value.x.RoundFloatToInt();
+            vectorInt.y = value.y.RoundFloatToInt();
+            vectorInt.z = value.z.RoundFloatToInt();
+
+            return vectorInt;
+        }
+
+        #endregion
     }
 }
