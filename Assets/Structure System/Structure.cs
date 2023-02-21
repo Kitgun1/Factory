@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Factory
 {
-    public abstract class Structure : MonoBehaviour
+    public class Structure : MonoBehaviour
     {
         [Min(1), SerializeField] protected int MaxLevel = 10;
         [SerializeField] protected List<float> Modifer;
@@ -23,7 +23,7 @@ namespace Factory
             return true;
         }
 
-        public void LimitModifer()
+        private void OnValidate()
         {
             if (Modifer.Count > MaxLevel)
             {
@@ -31,12 +31,12 @@ namespace Factory
             }
             else if (Modifer.Count < MaxLevel)
             {
-                List<float> tempModifer = new List<float>(Modifer);
+                List<float> tempLevels = new List<float>(Modifer);
                 for (int i = 0; i < MaxLevel - Modifer.Count; i++)
                 {
-                    tempModifer.Add(0);
+                    tempLevels.Add(0f);
                 }
-                Modifer = new List<float>(tempModifer);
+                Modifer = new List<float>(tempLevels);
             }
         }
     }
