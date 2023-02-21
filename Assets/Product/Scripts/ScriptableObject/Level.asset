@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a86e1a3dd917424c85a486d46de82f4, type: 3}
-  m_Name: Quality
+  m_Script: {fileID: 11500000, guid: 2011304765bd3c74190a4ff2ce007753, type: 3}
+  m_Name: Level
   m_EditorClassIdentifier: 
-  _levelInfo:
-  - Quality: 0
+  _productLevels: []

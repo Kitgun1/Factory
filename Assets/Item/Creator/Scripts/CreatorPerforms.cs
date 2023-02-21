@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Factory
 {
@@ -7,6 +8,8 @@ namespace Factory
     {
         [SerializeField] private Transform _creationPoint;
 
+        public event UnityAction<Product> Spawn;
+        
         private Creator _creator;
         private IEnumerator _creatorEnumerator = null;
 
@@ -39,7 +42,8 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(_creator.GetCurrentSpeed());
-                Instantiate(_creator.GetCurrentObject(), _creationPoint.position, Quaternion.identity, transform);
+                var product = Instantiate(_creator.GetCurrentObject(), _creationPoint.position, Quaternion.identity, transform);
+                Spawn?.Invoke(product);
             }
         }
     }

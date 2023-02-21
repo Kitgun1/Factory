@@ -12,7 +12,7 @@ namespace Factory
             base.Init(template);
         }
 
-        public override void UpdateInfo()
+        protected override void UpdateInfo()
         {
             Quality = _template.LevelInfo[Level].Quality;
         }

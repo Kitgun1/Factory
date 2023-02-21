@@ -9,6 +9,7 @@ namespace Factory
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
+        [SerializeField] private ProductTemplate _template;
         [SerializeField] private Product _product;
         [SerializeField] private float _rotationDuration;
 
@@ -26,16 +27,23 @@ namespace Factory
         private void OnEnable()
         {
             OnUpgrade += OnUpgraded;
+            _performs.Spawn += OnProductSpawned;
         }
 
         private void OnDisable()
         {
             OnUpgrade -= OnUpgraded;
+            _performs.Spawn -= OnProductSpawned;
         }
 
         private void OnUpgraded()
         {
             SetUpgrade(Level);
+        }
+
+        private void OnProductSpawned(Product product)
+        {
+            product.Init(_template);
         }
 
         private void SetUpgrade(int level = -1)

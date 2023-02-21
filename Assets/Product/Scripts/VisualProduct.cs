@@ -15,7 +15,7 @@ namespace Factory
             base.Init(template);
         }
 
-        public override void UpdateInfo()
+        protected override void UpdateInfo()
         {
             VisualProductInfo info = _template.LevelInfo[Level];
 

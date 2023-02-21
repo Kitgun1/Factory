@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e0378032a95968419224ffc3fa7b73e, type: 3}
-  m_Name: Visual
+  m_Script: {fileID: 11500000, guid: 4a86e1a3dd917424c85a486d46de82f4, type: 3}
+  m_Name: Quality
   m_EditorClassIdentifier: 
   _levelInfo:
-  - Material: {fileID: 0}
-    Mesh: {fileID: 0}
+  - Quality: 20
+  - Quality: 40
+  - Quality: 50
+  - Quality: 60
