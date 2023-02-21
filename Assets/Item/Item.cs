@@ -23,7 +23,7 @@ namespace Factory
             return true;
         }
 
-        private void OnValidate()
+        public void LimitModifer()
         {
             if (Modifer.Count > MaxLevel)
             {
@@ -31,12 +31,12 @@ namespace Factory
             }
             else if (Modifer.Count < MaxLevel)
             {
-                List<float> tempLevels = new List<float>(Modifer);
+                List<float> tempModifer = new List<float>(Modifer);
                 for (int i = 0; i < MaxLevel - Modifer.Count; i++)
                 {
-                    tempLevels.Add(0f);
+                    tempModifer.Add(0);
                 }
-                Modifer = new List<float>(tempLevels);
+                Modifer = new List<float>(tempModifer);
             }
         }
     }

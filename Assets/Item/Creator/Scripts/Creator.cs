@@ -60,6 +60,8 @@ namespace Factory
                 }
                 _materials = new List<Material>(tempLevels);
             }
+
+            LimitModifer();
         }
     }
 }

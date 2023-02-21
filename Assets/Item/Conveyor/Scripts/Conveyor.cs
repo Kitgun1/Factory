@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Collections.Generic;
-
 namespace Factory
 {
     public class Conveyor : Item
