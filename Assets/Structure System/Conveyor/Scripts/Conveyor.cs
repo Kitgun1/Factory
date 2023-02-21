@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Factory
 {
-    public class Conveyor : Item, IRotate
+    public class Conveyor : Structure, IRotate
     {
         [SerializeField] private float _rotationDuration;
 
