@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace Factory
 {
-    public class Item : MonoBehaviour
+    public abstract class Structure : MonoBehaviour
     {
         [Min(1), SerializeField] protected int MaxLevel = 10;
         [SerializeField] protected List<float> Modifer;

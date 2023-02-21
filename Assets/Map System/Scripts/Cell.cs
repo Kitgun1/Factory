@@ -2,19 +2,19 @@ namespace Factory
 {
     public class Cell
     {
-        private Item _item;
+        private Structure _item;
 
         public Cell()
         {
             _item = null;
         }
 
-        public Cell(Item itemDefault)
+        public Cell(Structure itemDefault)
         {
             _item = itemDefault;
         }
 
-        public bool TrySetItem(Item item)
+        public bool TrySetItem(Structure item)
         {
             if (_item != null) return false;
             
@@ -22,7 +22,7 @@ namespace Factory
             return true;
         }
 
-        public Item GetItem()
+        public Structure GetItem()
         {
             return _item;
         }

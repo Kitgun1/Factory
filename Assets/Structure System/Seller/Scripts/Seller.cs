@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Factory
 {
     [RequireComponent(typeof(BoxCollider))]
-    public class Seller : Item
+    public class Seller : Structure
     {
         [Layer, SerializeField] private int _layerProduct;
         private IEnumerator _sellerEnumerator = null;

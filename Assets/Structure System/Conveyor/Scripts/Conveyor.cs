@@ -1,6 +1,6 @@
 namespace Factory
 {
-    public class Conveyor : Item
+    public class Conveyor : Structure
     {
         private void OnEnable()
         {

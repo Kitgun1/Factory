@@ -7,7 +7,7 @@ namespace Factory
     {
         [SerializeField] private GameObject _platform;
         [Min(1), SerializeField] private Vector2Int _size = Vector2Int.one;
-        [SerializeField] private Item _defaultItem = null;
+        [SerializeField] private Structure _defaultItem = null;
 
         private Map _map;
 

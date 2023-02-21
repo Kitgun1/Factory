@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace Factory
 {
     [RequireComponent(typeof(CreatorPerforms))]
-    public class Creator : Item
+    public class Creator : Structure
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;

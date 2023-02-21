@@ -17,7 +17,7 @@ namespace Factory
             Init(width, height);
         }
 
-        public Map(Item itemDefault, int width = 5, int height = 5)
+        public Map(Structure itemDefault, int width = 5, int height = 5)
         {
             Init(itemDefault, width, height);
         }
@@ -34,7 +34,7 @@ namespace Factory
             }
         }
 
-        private void Init(Item itemDefault, int width = 5, int height = 5)
+        private void Init(Structure itemDefault, int width = 5, int height = 5)
         {
             _cells = new Cell[width, height];
             for (int x = 0; x < _cells.GetLength(0); x++)
