@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace Factory
 {
-	public class VisualProduct : Product
-	{
-		[SerializeField] private MeshFilter _filter;
-		[SerializeField] private MeshRenderer _renderer;
+    public class VisualProduct : Product
+    {
+        [SerializeField] private MeshFilter _filter;
+        [SerializeField] private MeshRenderer _renderer;
 
         private VisualProductTemplate _template;
 

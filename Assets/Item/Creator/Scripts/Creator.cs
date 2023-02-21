@@ -20,12 +20,12 @@ namespace Factory
 
         private void Start()
         {
-            _performs = GetComponent<CreatorPerforms>();
             SetUpgrade();
         }
 
         private void OnEnable()
         {
+            _performs = GetComponent<CreatorPerforms>();
             OnUpgrade += OnUpgraded;
             _performs.Spawn += OnProductSpawned;
         }
