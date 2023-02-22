@@ -23,7 +23,7 @@ namespace Factory
             return true;
         }
 
-        private void OnValidate()
+        public void LimitModifer()
         {
             if (Modifer.Count > MaxLevel)
             {
