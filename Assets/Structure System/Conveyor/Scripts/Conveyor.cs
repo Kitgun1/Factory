@@ -1,12 +1,7 @@
-using UnityEngine;
-using System.Collections.Generic;
-
 namespace Factory
 {
-    public class Conveyor : Structure, IRotate
+    public class Conveyor : Structure
     {
-        [SerializeField] private float _rotationDuration;
-
         private void OnEnable()
         {
             OnUpgrade += OnUpgraded;
@@ -22,9 +17,9 @@ namespace Factory
 
         }
 
-        public void Rotate(Transform transform, Vector2 direction)
+        private void OnValidate()
         {
-            EntityTurner.Action(transform, _rotationDuration);
+            LimitModifer();
         }
     }
 }

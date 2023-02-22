@@ -68,6 +68,8 @@ namespace Factory
                 }
                 _materials = new List<Material>(tempLevels);
             }
+
+            LimitModifer();
         }
 
         public void Rotate(Transform transform)
