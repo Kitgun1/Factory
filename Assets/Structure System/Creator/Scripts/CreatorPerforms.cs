@@ -42,7 +42,7 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(_creator.GetCurrentSpeed());
-                var product = Instantiate(_creator.GetCurrentObject(), _creationPoint.position, Quaternion.identity, transform);
+                var product = Instantiate(_creator.GetCurrentTemplate().GameObject, _creationPoint.position, Quaternion.identity, transform);
                 Spawn?.Invoke(product);
             }
         }

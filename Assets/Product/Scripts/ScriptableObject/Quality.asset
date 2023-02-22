@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a86e1a3dd917424c85a486d46de82f4, type: 3}
   m_Name: Quality
   m_EditorClassIdentifier: 
+  GameObject: {fileID: 6295921169666595356, guid: 2474557bb0d740e43b38bfee8be70589, type: 3}
   _levelInfo:
   - Quality: 20
   - Quality: 40

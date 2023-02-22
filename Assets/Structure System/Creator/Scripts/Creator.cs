@@ -10,13 +10,12 @@ namespace Factory
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
         [SerializeField] private ProductTemplate _template;
-        [SerializeField] private Product _product;
         [SerializeField] private float _rotationDuration;
 
         private CreatorPerforms _performs;
 
         public float GetCurrentSpeed() => Modifer[Level];
-        public Product GetCurrentObject() => _product;
+        public ProductTemplate GetCurrentTemplate() => _template;
 
         private void Start()
         {
