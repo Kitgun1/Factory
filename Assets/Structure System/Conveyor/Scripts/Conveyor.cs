@@ -16,5 +16,10 @@ namespace Factory
         {
 
         }
+
+        private void OnValidate()
+        {
+            LimitModifer();
+        }
     }
 }

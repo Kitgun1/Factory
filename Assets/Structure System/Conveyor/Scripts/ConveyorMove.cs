@@ -4,33 +4,33 @@ using UnityEngine;
 
 namespace Factory
 {
-	public class ConveyorMove : MonoBehaviour
-	{
+    public class ConveyorMove : MonoBehaviour
+    {
         [Layer, SerializeField] private int _sortingLayer;
         [SerializeField] private float _speed;
+        [MinValue(-1), MaxValue(1), SerializeField] private Vector2Int _direction;
 
-        private List<Rigidbody> _bodies = new List<Rigidbody>();
+        private List<Transform> _products = new List<Transform>();
 
         private void OnTriggerEnter(Collider other)
         {
-
             var gameObject = other.gameObject;
-            if (gameObject.layer != _sortingLayer) return;
-            _bodies.Add(gameObject.GetComponent<Rigidbody>());
+            if (_sortingLayer != gameObject.layer) return;
+            _products.Add(gameObject.transform);
         }
 
         private void OnTriggerExit(Collider other)
         {
             var gameObject = other.gameObject;
-            if (gameObject.layer != _sortingLayer) return;
-            _bodies.Remove(gameObject.GetComponent<Rigidbody>());
+            if (_sortingLayer != gameObject.layer) return;
+            _products.Remove(gameObject.transform);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            foreach (var body in _bodies)
+            foreach (var product in _products)
             {
-                body.AddForce(transform.forward * -1f * _speed);
+                product.transform.Translate(new Vector3(_direction.x, 0, _direction.y) * _speed * Time.deltaTime);
             }
         }
     }
