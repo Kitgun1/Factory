@@ -1,37 +1,37 @@
 using NaughtyAttributes;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Factory
 {
+    [RequireComponent(typeof(Conveyor))]
+    [RequireComponent(typeof(BoxCollider))]
     public class ConveyorMove : MonoBehaviour
     {
         [Layer, SerializeField] private int _sortingLayer;
-        [SerializeField] private float _speed;
-        [MinValue(-1), MaxValue(1), SerializeField] private Vector2Int _direction;
 
-        private List<Transform> _products = new List<Transform>();
+        private MoverManage _mover;
+        private Conveyor _conveyor;
+
+        private void Start()
+        {
+            _conveyor = GetComponent<Conveyor>();
+            _mover = MoverManage.Instance;
+        }
 
         private void OnTriggerEnter(Collider other)
         {
             var gameObject = other.gameObject;
             if (_sortingLayer != gameObject.layer) return;
-            _products.Add(gameObject.transform);
+            var product = gameObject.GetComponent<Product>();
+            _mover.AddProductMove(product, _conveyor);
         }
 
         private void OnTriggerExit(Collider other)
         {
             var gameObject = other.gameObject;
             if (_sortingLayer != gameObject.layer) return;
-            _products.Remove(gameObject.transform);
-        }
-
-        private void Update()
-        {
-            foreach (var product in _products)
-            {
-                product.transform.Translate(new Vector3(_direction.x, 0, _direction.y) * _speed * Time.deltaTime);
-            }
+            var product = gameObject.GetComponent<Product>();
+            _mover.TryRemoveProductMove(product);
         }
     }
 }

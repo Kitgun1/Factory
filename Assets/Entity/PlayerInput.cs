@@ -24,7 +24,7 @@ namespace Factory
 
             _animation.SetAnimationFloat(AnimationParamType.Speed, GetSpeed(_direction));
 
-            _mapManage.GetNearCell(transform.position);
+            //_mapManage.GetNearCell(transform.position);
         }
 
         private void FixedUpdate()
