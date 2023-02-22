@@ -5,36 +5,45 @@ using UnityEngine.Events;
 namespace Factory
 {
     [RequireComponent(typeof(CreatorPerforms))]
-    public class Creator : Structure
+    public class Creator : Structure, ITurn
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
-        [SerializeField] private GameObject _object;
+        [SerializeField] private ProductTemplate _template;
+        [SerializeField] private Product _product;
+        [SerializeField] private float _rotationDuration;
 
         private CreatorPerforms _performs;
 
         public float GetCurrentSpeed() => Modifer[Level];
-        public GameObject GetCurrentObject() => _object;
+        public Product GetCurrentObject() => _product;
 
         private void Start()
         {
-            _performs = GetComponent<CreatorPerforms>();
             SetUpgrade();
         }
 
         private void OnEnable()
         {
+            _performs = GetComponent<CreatorPerforms>();
             OnUpgrade += OnUpgraded;
+            _performs.Spawn += OnProductSpawned;
         }
 
         private void OnDisable()
         {
             OnUpgrade -= OnUpgraded;
+            _performs.Spawn -= OnProductSpawned;
         }
 
         private void OnUpgraded()
         {
             SetUpgrade(Level);
+        }
+
+        private void OnProductSpawned(Product product)
+        {
+            product.Init(_template);
         }
 
         private void SetUpgrade(int level = -1)
@@ -60,8 +69,11 @@ namespace Factory
                 }
                 _materials = new List<Material>(tempLevels);
             }
+        }
 
-            LimitModifer();
+        public void Rotate(Transform transform)
+        {
+            EntityTurner.Action(transform, _rotationDuration);
         }
     }
 }
