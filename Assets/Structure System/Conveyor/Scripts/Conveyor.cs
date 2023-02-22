@@ -4,9 +4,9 @@ namespace Factory
 {
     public class Conveyor : Structure
     {
-        [SerializeField] private Vector2Int Direction = Vector2Int.down;
+        [SerializeField] private Vector2 Direction = Vector2.down;
 
-        public Vector2Int CurrentDirection() => Direction;
+        public Vector2 CurrentDirection() => Direction;
         public float CurrentSpeed() => Modifer[Level];
 
         private void OnEnable()

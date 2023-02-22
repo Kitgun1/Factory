@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &963417706489249328
+--- !u!1 &8811650993497028902
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6896980087513394240}
-  - component: {fileID: 4073100247573244581}
-  - component: {fileID: 2428662995887752236}
-  - component: {fileID: 5168213740658266658}
+  - component: {fileID: 2927626119478438742}
+  - component: {fileID: 5733493201586613683}
+  - component: {fileID: 6243012214547137338}
+  - component: {fileID: 3507976090364532020}
   m_Layer: 0
-  m_Name: Conveyor
+  m_Name: Conveyor Down-Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6896980087513394240
+--- !u!4 &2927626119478438742
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963417706489249328}
+  m_GameObject: {fileID: 8811650993497028902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7513246462447406800}
+  - {fileID: 2059797525652535398}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4073100247573244581
+--- !u!65 &5733493201586613683
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963417706489249328}
+  m_GameObject: {fileID: 8811650993497028902}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -50,47 +50,48 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8999992, y: 0.099999905, z: 1}
-  m_Center: {x: 0, y: 0.5500001, z: 0}
---- !u!114 &2428662995887752236
+  m_Size: {x: 0.9, y: 0.1, z: 1}
+  m_Center: {x: 0, y: 0.55, z: 0}
+--- !u!114 &6243012214547137338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963417706489249328}
+  m_GameObject: {fileID: 8811650993497028902}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb98352ca6c452048b167ca850acb97e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _sortingLayer: 10
-  _speed: 5
---- !u!114 &5168213740658266658
+--- !u!114 &3507976090364532020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963417706489249328}
+  m_GameObject: {fileID: 8811650993497028902}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b618d075d867d74418e0358d8160195f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxLevel: 10
-  Modifer: []
---- !u!1001 &7777775982546275945
+  MaxLevel: 1
+  Modifer:
+  - 1
+  Direction: {x: 0, y: 1}
+--- !u!1001 &2082858361652185471
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6896980087513394240}
+    m_TransformParent: {fileID: 2927626119478438742}
     m_Modifications:
     - target: {fileID: 266943650617819321, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
       propertyPath: m_RootOrder
@@ -136,6 +137,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1130806084334892128, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5217715664926573613, guid: 7ca9b947ac775024db4cd39eb04925b4, type: 3}
+    - target: {fileID: 1130806084334892128, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130806084334892128, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 3003d929ff8c1674ab8df533df09c137, type: 2}
     - target: {fileID: 1629598814322968582, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
       propertyPath: m_Name
       value: Conveyor 2
@@ -146,8 +159,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
---- !u!4 &7513246462447406800 stripped
+--- !u!4 &2059797525652535398 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 266943650617819321, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
-  m_PrefabInstance: {fileID: 7777775982546275945}
+  m_CorrespondingSourceObject: {fileID: 32108261918667033, guid: 76bf4c211eb8dd34798bb219ef7e6336, type: 3}
+  m_PrefabInstance: {fileID: 2082858361652185471}
   m_PrefabAsset: {fileID: 0}

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Factory
 {
@@ -21,7 +20,7 @@ namespace Factory
         {
             foreach (var productMove in _productsMove)
             {
-                Vector2Int direction = productMove.Conveyor.CurrentDirection();
+                Vector2 direction = productMove.Conveyor.CurrentDirection();
                 productMove.Product.transform.Translate(new Vector3(direction.x, 0, direction.y) * productMove.Conveyor.CurrentSpeed() * Time.deltaTime, Space.World);
             }
         }
