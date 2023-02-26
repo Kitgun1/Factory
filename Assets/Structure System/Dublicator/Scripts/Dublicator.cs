@@ -1,13 +1,14 @@
+using KiMath;
 using UnityEngine;
 
 namespace Factory
 {
-    public class Upgrader : Interacter
-    {
+	public class Dublicator : Interacter
+	{
         protected override void Action(Product product)
         {
-            if(product is IUpgradeable upgradeable)
-                upgradeable.TryUpgrade();
+            Product cloned = Instantiate(product, product.transform.position, Quaternion.identity);
+
         }
 
         private void OnValidate()

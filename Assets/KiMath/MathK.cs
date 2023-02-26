@@ -1,5 +1,7 @@
 using System;
+using System.Drawing;
 using UnityEngine;
+using UnityEngine.Jobs;
 
 namespace KiMath
 {
@@ -38,6 +40,40 @@ namespace KiMath
             vectorInt.z = value.z.RoundFloatToInt();
 
             return vectorInt;
+        }
+
+        #endregion
+
+        #region Spliting 
+
+        public static float[] SplitWay(float width, float size, int splitCount, SplitType splitType = SplitType.Center)
+        {
+            float indent = width / splitCount;
+            float[] positions = new float[splitCount];
+
+            switch (splitType)
+            {
+                case SplitType.Center:
+                    SetPosition(ref positions, indent, indent / 2);
+                    break;
+                case SplitType.RigthSide:
+                    SetPosition(ref positions, indent, size / 2);
+                    break;
+                case SplitType.LeftSide:
+                    SetPosition(ref positions, indent, -(size / 2));
+                    break;
+            }
+
+            return positions;
+        }
+
+        private static void SetPosition(ref float[] positions, float indent, float offset)
+        {
+            for (int i = 0; i < positions.Length; i++)
+            {
+                positions[i] += indent * i;
+                positions[i] += offset;
+            }
         }
 
         #endregion
