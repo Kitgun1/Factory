@@ -1,15 +1,18 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Factory
 {
+    [RequireComponent(typeof(Rigidbody))]
     public abstract class Product : MonoBehaviour
     {
         public int Level { get; private set; }
         public ProductTemplate Templtate { get; private set; }
+        public Rigidbody Rigidbody { get; private set; }
 
         public virtual void Init(ProductTemplate template)
         {
+            Rigidbody = GetComponent<Rigidbody>();
+
             Templtate = template;
             Level = 0;
 

@@ -20,8 +20,10 @@ namespace Factory
         {
             foreach (var productMove in _productsMove)
             {
-                Vector2 direction = productMove.Conveyor.CurrentDirection();
-                productMove.Product.transform.Translate(new Vector3(direction.x, 0, direction.y) * productMove.Conveyor.CurrentSpeed() * Time.deltaTime, Space.World);
+                Conveyor conveyor = productMove.Conveyor;
+                Vector2 targetPosition = new Vector2(conveyor.CurrentDirection().x, conveyor.CurrentDirection().y);//GetTargetPosition(conveyor, currentPosition);
+
+                productMove.Product.Rigidbody.velocity = new Vector3(targetPosition.x, 0f, targetPosition.y) * conveyor.CurrentSpeed();
             }
         }
 
