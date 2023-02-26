@@ -22,8 +22,9 @@ namespace Factory
             {
                 Conveyor conveyor = productMove.Conveyor;
                 Vector2 targetPosition = new Vector2(conveyor.CurrentDirection().x, conveyor.CurrentDirection().y);//GetTargetPosition(conveyor, currentPosition);
+                Vector3 velocity = new Vector3(targetPosition.x, 0, targetPosition.y) * conveyor.CurrentSpeed();
 
-                productMove.Product.Rigidbody.velocity = new Vector3(targetPosition.x, 0f, targetPosition.y) * conveyor.CurrentSpeed();
+                productMove.Product.Rigidbody.velocity = velocity;
             }
         }
 

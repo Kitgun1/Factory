@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Factory
 {
-    public class Upgrader : Interacter
+    public class VisualUpgrader : Interacter
     {
         protected override void Action(Product product)
         {
@@ -12,7 +12,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer();
+            LimitModifer(Modifer);
         }
     }
 }

@@ -13,7 +13,8 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer();
+            LimitModifer(list:Modifer);
+            LimitModifer(list:MaxProductCount);
         }
     }
 }

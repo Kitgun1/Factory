@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Factory
 {
     [RequireComponent(typeof(Rigidbody))]
-    public abstract class Product : MonoBehaviour
+    public abstract class Product : MonoBehaviour, IUpgradeable
     {
         public int Level { get; private set; }
         public ProductTemplate Templtate { get; private set; }

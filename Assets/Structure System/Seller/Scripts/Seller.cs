@@ -12,5 +12,10 @@ namespace Factory
             _wallet.CurrencyTransfer(CurrencyType.Coin, Modifer[Level]);
             return base.DestroyerRoutine();
         }
+
+        private void OnValidate()
+        {
+            LimitModifer(Modifer);
+        }
     }
 }

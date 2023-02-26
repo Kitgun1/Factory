@@ -1,10 +1,12 @@
 namespace Factory
 {
-	public class QualityProduct : Product
+	public class QualityProduct : Product, IQuality
 	{
         public float Quality { get; private set; }
 
-        QualityProductTemplate _template;
+        private QualityProductTemplate _template;
+
+        private const float _maxQuality = 1;
 
         public override void Init(ProductTemplate template)
         {
@@ -13,8 +15,14 @@ namespace Factory
         }
 
         protected override void UpdateInfo()
+        { 
+
+        }
+
+        public void SetQuality(float value)
         {
-            Quality = _template.LevelInfo[Level].Quality;
+            if (value > 0 && value < _maxQuality)
+            Quality = value;
         }
     }
 }
