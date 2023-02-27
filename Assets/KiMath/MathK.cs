@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace KiMath
@@ -40,6 +38,19 @@ namespace KiMath
             vectorInt.z = value.z.RoundFloatToInt();
 
             return vectorInt;
+        }
+
+        #endregion
+
+        #region FloatToString
+
+        public static string ToString(this float value)
+        {
+            if (value % 10 > 0)
+                return value.ToString("F2");
+            else if (value % 100 > 0)
+                return value.ToString("F1");
+            else return value.ToString("F0");
         }
 
         #endregion
