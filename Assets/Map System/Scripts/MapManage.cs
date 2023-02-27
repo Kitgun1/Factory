@@ -46,6 +46,11 @@ namespace Factory
             }
         }
 
+        public void GetCell(int x, int y)
+        {
+            _map.GetCell(x, y);
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;

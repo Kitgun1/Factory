@@ -61,5 +61,15 @@ namespace Factory
             Debug.Log($"{_cells[positionCell.x, positionCell.y]} | {positionCell.x} ~ {positionCell.y}");
             return _cells[positionCell.x, positionCell.y];
         }
+
+        public Cell GetCell(int x, int y)
+        {
+            if (x > _cells.GetLength(0) || x < 0 || y > _cells.GetLength(1) || y < 0)
+            {
+                return null;
+            }
+
+            return _cells[x, y];
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Factory
         [SerializeField] protected List<float> Modifer;
         protected int Level;
         protected Quaternion Quaternion;
-        protected Vector3 Position;
+        protected Vector2Int Position;
 
         protected event UnityAction OnUpgrade;
 
