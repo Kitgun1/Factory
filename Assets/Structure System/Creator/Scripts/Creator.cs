@@ -41,7 +41,7 @@ namespace Factory
 
         private void OnProductSpawned(Product product)
         {
-            product.Init(_template);
+            product.Init(_template, false);
         }
 
         private void SetUpgrade(int level = -1)

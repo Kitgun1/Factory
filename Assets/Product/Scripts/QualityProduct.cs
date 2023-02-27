@@ -8,14 +8,14 @@ namespace Factory
 
         private const float _maxQuality = 1;
 
-        public override void Init(ProductTemplate template)
+        public override void Init(ProductTemplate template, bool cloned)
         {
             _template = template as QualityProductTemplate;
-            base.Init(template);
+            base.Init(template, cloned);
         }
 
         protected override void UpdateInfo()
-        { 
+        {
 
         }
 

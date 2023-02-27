@@ -46,8 +46,6 @@ namespace Factory
 
         private void TryAddProduct(Product product, RelizeWay way)
         {
-            product.transform.DOMove(_holdPosition.position, _moveDuration);
-
             switch (way)
             {
                 case RelizeWay.Interact:
@@ -62,27 +60,40 @@ namespace Factory
 
         private IEnumerator ServeProduct(Product product, RelizeWay way)
         {
-            yield return new WaitForSeconds(_moveDuration);
+            product.transform.DOMove(_holdPosition.position, _moveDuration);
             product.gameObject.SetActive(false);
+            yield return new WaitForSeconds(_moveDuration);
+
+            if (way == RelizeWay.Interact)
+            {
+                yield return new WaitForSeconds(Modifer[Level]);
+                Action(product);
+            }
+
+            RelizeProduct(product, way);
+        }
+
+        private void RelizeProduct(Product product, RelizeWay way)
+        {
+            Vector3 position = new Vector3();
+            product.gameObject.SetActive(true);
 
             switch (way)
             {
                 case RelizeWay.Interact:
-                    yield return new WaitForSeconds(Modifer[Level]);
-                    Action(product);
-                    RelizeProduct(product, _relizePosition);
+                    position = _relizePosition.position;
                     break;
                 case RelizeWay.Skip:
-                    RelizeProduct(product, _skipPosition);
+                    position = _skipPosition.position;
                     break;
             }
-
+            product.transform.DOMove(position, _moveDuration);
         }
 
-        private void RelizeProduct(Product product, Transform transform)
+        protected void AddClonedProduct(Product product)
         {
-            product.gameObject.SetActive(true);
-            product.transform.DOMove(transform.position, _moveDuration);
+            _serveProducts.Add(product);
+            RelizeProduct(product, RelizeWay.Interact);
         }
 
         protected abstract void Action(Product product);

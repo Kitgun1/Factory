@@ -7,8 +7,12 @@ namespace Factory
 	{
         protected override void Action(Product product)
         {
-            Product cloned = Instantiate(product, product.transform.position, Quaternion.identity);
+            if (product.Cloned)
+                return;
 
+            Product cloned = Instantiate(product, product.transform.position, Quaternion.identity);
+            cloned.Init(product.Templtate, true);
+            AddClonedProduct(cloned);
         }
 
         private void OnValidate()
