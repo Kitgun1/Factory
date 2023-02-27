@@ -7,7 +7,6 @@ namespace Factory
     {
         [SerializeField] private GameObject _platform;
         [Min(1), SerializeField] private Vector2Int _size = Vector2Int.one;
-        [SerializeField] private Structure _defaultItem = null;
 
         private Map _map;
 
@@ -20,7 +19,7 @@ namespace Factory
 
         private void Init()
         {
-            _map = new Map(_defaultItem, _size.x, _size.y);
+            _map = new Map(_size.x, _size.y);
 
             Vector3 offset = new Vector3(0f, -0.5f, 0f);
             if (_size.x % 2 == 0)
@@ -33,22 +32,31 @@ namespace Factory
             platform.GetComponent<MeshRenderer>().material.DOTiling(_size, 0.2f);
         }
 
-        public void GetNearCell(Vector3 worldPosition)
+        public void GetNearStrcture(Vector3 worldPosition)
         {
-            var cell = _map.GetNearCell(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell);
-            if (cell == null) return;
+            var strcture = _map.GetNearStructure(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell);
+            if (strcture == null) return;
             _nearCell = new Vector3(worldPositionCell.x, 0f, worldPositionCell.y);
 
-            if (cell.GetItem() == null && _defaultItem != null)
-            {
-                Instantiate(_defaultItem, _nearCell, Quaternion.identity, transform);
-                cell.TrySetItem(_defaultItem);
-            }
+            //if (strcture == null)
+            //{
+            //    var structure = Instantiate(new structure, _nearCell, Quaternion.identity, transform);
+            //    strcture.TrySetItem(structure);
+            //}
         }
 
-        public void GetCell(int x, int y)
+        public void GetStructure(int x, int y)
         {
-            _map.GetCell(x, y);
+            _map.GetStructure(x, y);
+        }
+
+        public bool TryCreateStructure(Structure structure, int x, int y)
+        {
+            if (_map.GetStructure(x, y) != null) return false;
+
+            structure = Instantiate(structure, _nearCell, Quaternion.identity, transform);
+            _map.SetStructure(structure, x, y);
+            return true;
         }
 
         private void OnDrawGizmos()

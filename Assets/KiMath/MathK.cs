@@ -7,7 +7,7 @@ namespace KiMath
     {
         #region Rounding
 
-        public static int RoundFloatToInt(this float value)
+        public static int RoundToInt(this float value)
         {
             if (value >= 0f && Math.Abs(value % 1) < 0.5f)
                 value -= value % 1;
@@ -21,21 +21,21 @@ namespace KiMath
             return (int)value;
         }
 
-        public static Vector2Int RoundVector2ToVector2Int(this Vector2 value)
+        public static Vector2Int RoundToVector2Int(this Vector2 value)
         {
             Vector2Int vectorInt = new Vector2Int();
-            vectorInt.x = value.x.RoundFloatToInt();
-            vectorInt.y = value.y.RoundFloatToInt();
+            vectorInt.x = value.x.RoundToInt();
+            vectorInt.y = value.y.RoundToInt();
 
             return vectorInt;
         }
 
-        public static Vector3Int RoundVector3ToVector3Int(this Vector3 value)
+        public static Vector3Int RoundToVector3Int(this Vector3 value)
         {
             Vector3Int vectorInt = new Vector3Int();
-            vectorInt.x = value.x.RoundFloatToInt();
-            vectorInt.y = value.y.RoundFloatToInt();
-            vectorInt.z = value.z.RoundFloatToInt();
+            vectorInt.x = value.x.RoundToInt();
+            vectorInt.y = value.y.RoundToInt();
+            vectorInt.z = value.z.RoundToInt();
 
             return vectorInt;
         }

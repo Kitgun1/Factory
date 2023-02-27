@@ -5,7 +5,7 @@ namespace Factory
 {
     public class Map
     {
-        private Cell[,] _cells;
+        private Structure[,] _cells;
 
         public Map()
         {
@@ -17,59 +17,46 @@ namespace Factory
             Init(width, height);
         }
 
-        public Map(Structure itemDefault, int width = 5, int height = 5)
-        {
-            Init(itemDefault, width, height);
-        }
-
         private void Init(int width = 5, int height = 5)
         {
-            _cells = new Cell[width, height];
+            _cells = new Structure[width, height];
             for (int x = 0; x < _cells.GetLength(0); x++)
             {
                 for (int y = 0; y < _cells.GetLength(1); y++)
                 {
-                    _cells[x, y] = new Cell();
+                    _cells[x, y] = null;
                 }
             }
         }
 
-        private void Init(Structure itemDefault, int width = 5, int height = 5)
+        public Structure GetNearStructure(Vector2 position, Vector2Int sizeMap, out Vector2 worldPositionStructure)
         {
-            _cells = new Cell[width, height];
-            for (int x = 0; x < _cells.GetLength(0); x++)
-            {
-                for (int y = 0; y < _cells.GetLength(1); y++)
-                {
-                    _cells[x, y] = new Cell(itemDefault);
-                }
-            }
+            worldPositionStructure = (Vector2)position.RoundToVector2Int();
+
+            Vector2Int positionStructure = worldPositionStructure.RoundToVector2Int() + ((sizeMap - Vector2.one * 2) / 2).RoundToVector2Int();
+
+            if (positionStructure.x > _cells.GetLength(0) - 1 || positionStructure.x < 0)
+                positionStructure.x = -1;
+            if (positionStructure.y > _cells.GetLength(1) - 1 || positionStructure.y < 0)
+                positionStructure.y = -1;
+
+            if (positionStructure.x == -1 || positionStructure.y == -1) return null;
+            Debug.Log($"{_cells[positionStructure.x, positionStructure.y]} | {positionStructure.x} ~ {positionStructure.y}");
+            return _cells[positionStructure.x, positionStructure.y];
         }
 
-        public Cell GetNearCell(Vector2 position, Vector2Int sizeMap, out Vector2 worldPositionCell)
-        {
-            worldPositionCell = (Vector2)position.RoundVector2ToVector2Int();
-
-            Vector2Int positionCell = worldPositionCell.RoundVector2ToVector2Int() + ((sizeMap - Vector2.one * 2) / 2).RoundVector2ToVector2Int();
-
-            if (positionCell.x > _cells.GetLength(0) - 1 || positionCell.x < 0)
-                positionCell.x = -1;
-            if (positionCell.y > _cells.GetLength(1) - 1 || positionCell.y < 0)
-                positionCell.y = -1;
-
-            if (positionCell.x == -1 || positionCell.y == -1) return null;
-            Debug.Log($"{_cells[positionCell.x, positionCell.y]} | {positionCell.x} ~ {positionCell.y}");
-            return _cells[positionCell.x, positionCell.y];
-        }
-
-        public Cell GetCell(int x, int y)
+        public Structure GetStructure(int x, int y)
         {
             if (x > _cells.GetLength(0) || x < 0 || y > _cells.GetLength(1) || y < 0)
-            {
                 return null;
-            }
 
             return _cells[x, y];
+        }
+
+        public void SetStructure(Structure structure, int x, int y)
+        {
+            _cells[x, y] = structure;
+            structure.SetPosition(new Vector2Int(x, y));
         }
     }
 }

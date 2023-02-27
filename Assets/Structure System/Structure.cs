@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,11 +9,15 @@ namespace Factory
     {
         [Min(1), SerializeField] protected int MaxLevel = 10;
         [SerializeField] protected List<float> Modifer;
+
         protected int Level;
         protected Quaternion Quaternion;
         protected Vector2Int Position;
 
         protected event UnityAction OnUpgrade;
+
+        public void SetPosition(Vector2Int position) => Position = position;
+        public void SetQuaternion(Quaternion quaternion) => Quaternion = quaternion;
 
         public bool TryUpgrade()
         {
