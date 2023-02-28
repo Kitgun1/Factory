@@ -26,13 +26,11 @@ namespace Factory
         private void OnEnable()
         {
             _performs = GetComponent<CreatorPerforms>();
-            OnUpgrade += OnUpgraded;
             _performs.Spawn += OnProductSpawned;
         }
 
         private void OnDisable()
         {
-            OnUpgrade -= OnUpgraded;
             _performs.Spawn -= OnProductSpawned;
         }
 

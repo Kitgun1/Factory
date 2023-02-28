@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.Jobs;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace KiMath
 {
@@ -25,7 +27,7 @@ namespace KiMath
             return (int)value;
         }
 
-        public static Vector2Int RoundToVector2Int(this Vector2 value)
+        public static Vector2Int RoundToVector2Int(this UnityEngine.Vector2 value)
         {
             Vector2Int vectorInt = new Vector2Int();
             vectorInt.x = value.x.RoundToInt();
@@ -34,7 +36,7 @@ namespace KiMath
             return vectorInt;
         }
 
-        public static Vector3Int RoundToVector3Int(this Vector3 value)
+        public static Vector3Int RoundToVector3Int(this UnityEngine.Vector3 value)
         {
             Vector3Int vectorInt = new Vector3Int();
             vectorInt.x = value.x.RoundToInt();
