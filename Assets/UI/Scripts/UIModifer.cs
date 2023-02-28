@@ -34,7 +34,7 @@ namespace Factory
 
         public void SetPrice(float priceUpgrade)
         {
-            _priceUpgrade.text = MathK.ToString(priceUpgrade);
+            //_priceUpgrade.text = MathK.ToString(priceUpgrade);
         }
     }
 }

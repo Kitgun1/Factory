@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +21,7 @@ namespace Factory
 
         protected event UnityAction OnUpgrade;
 
+        private MapManage _mapManage;
         private IEnumerator _sendEnumerator = null;
 
         public void SetPosition(Vector2Int position) => Position = position;
@@ -29,6 +29,7 @@ namespace Factory
 
         protected virtual void Init()
         {
+            _mapManage = MapManage.Instance;
             PointUp = new StructurePoint(new Vector2Int(0, 1));
             PointRight = new StructurePoint(new Vector2Int(1, 0));
             PointDown = new StructurePoint(new Vector2Int(0, -1));
@@ -56,7 +57,48 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(Modifer[Level]);
-                
+                List<StructurePoint> pointsOutput = GetStructurePoints(StructurePointState.Output);
+                List<StructurePoint> pointsInput = GetStructurePoints(StructurePointState.Input);
+
+                if (pointsInput.Count != 0 || pointsOutput.Count != 0)
+                {
+                    foreach (var pointInput in pointsInput)
+                    {
+                        if (pointInput.Product != null)
+                        {
+                            StructurePoint emptyPointOutput = null;
+                            foreach (var pointOutput in pointsOutput)
+                            {
+                                if (pointOutput.Product == null)
+                                {
+                                    emptyPointOutput = pointOutput;
+                                    break;
+                                }
+                            }
+
+                            if (emptyPointOutput != null)
+                            {
+                                emptyPointOutput.Product = pointInput.Product;
+                                pointInput.Product = null;
+                            }
+                        }
+                    }
+                }
+
+                foreach (var pointInput in pointsInput)
+                {
+                    Vector2Int position = new Vector2Int(Position.x + pointInput.Axis.x, Position.y + pointInput.Axis.x);
+                    var structure = _mapManage.GetStructure(position.x, position.y);
+                    if (structure != null)
+                    {
+                        var pointOutput = structure.GetStructurePoint(StructurePointState.Output, new Vector2Int(pointInput.Axis.x * -1, pointInput.Axis.y * -1));
+                        if (pointOutput.Product != null)
+                        {
+                            pointInput.Product = pointOutput.Product;
+                            pointOutput.Product = null;
+                        }
+                    }
+                }
             }
         }
 
@@ -107,20 +149,37 @@ namespace Factory
             return result;
         }
 
-        public virtual void LimitModifer()
+        protected void LimitModifer(List<float> list)
         {
-            if (Modifer.Count > MaxLevel)
+            if (list.Count > MaxLevel)
             {
-                Modifer.RemoveRange(MaxLevel, Modifer.Count - MaxLevel);
+                list.RemoveRange(MaxLevel, list.Count - MaxLevel);
             }
-            else if (Modifer.Count < MaxLevel)
+            else if (list.Count < MaxLevel)
             {
-                List<float> tempLevels = new List<float>(Modifer);
-                for (int i = 0; i < MaxLevel - Modifer.Count; i++)
+                List<float> tempLevels = new List<float>(list);
+                for (int i = 0; i < MaxLevel - list.Count; i++)
                 {
                     tempLevels.Add(0f);
                 }
-                Modifer = new List<float>(tempLevels);
+                list = new List<float>(tempLevels);
+            }
+        }
+
+        protected void LimitModifer(List<Material> list)
+        {
+            if (list.Count > MaxLevel)
+            {
+                list.RemoveRange(MaxLevel, list.Count - MaxLevel);
+            }
+            else if (list.Count < MaxLevel)
+            {
+                List<Material> tempLevels = new List<Material>(list);
+                for (int i = 0; i < MaxLevel - list.Count; i++)
+                {
+                    tempLevels.Add(null);
+                }
+                list = new List<Material>(tempLevels);
             }
         }
     }

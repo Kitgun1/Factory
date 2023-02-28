@@ -29,11 +29,11 @@ namespace Factory
             }
         }
 
-        public Structure GetNearStructure(Vector2 position, Vector2Int sizeMap, out Vector2 worldPositionStructure)
+        public Structure GetNearStructure(Vector2 position, Vector2Int sizeMap, out Vector2 worldPositionStructure, out Vector2Int positionStructure)
         {
             worldPositionStructure = (Vector2)position.RoundToVector2Int();
 
-            Vector2Int positionStructure = worldPositionStructure.RoundToVector2Int() + ((sizeMap - Vector2.one * 2) / 2).RoundToVector2Int();
+            positionStructure = worldPositionStructure.RoundToVector2Int() + ((sizeMap - Vector2.one * 2) / 2).RoundToVector2Int();
 
             if (positionStructure.x > _cells.GetLength(0) - 1 || positionStructure.x < 0)
                 positionStructure.x = -1;
@@ -41,7 +41,7 @@ namespace Factory
                 positionStructure.y = -1;
 
             if (positionStructure.x == -1 || positionStructure.y == -1) return null;
-            //Debug.Log($"{_cells[positionStructure.x, positionStructure.y]} | {positionStructure.x} ~ {positionStructure.y}");
+
             return _cells[positionStructure.x, positionStructure.y];
         }
 

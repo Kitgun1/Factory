@@ -584,9 +584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387e028eb745cf3449614a22c94738a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modifers: {fileID: 1364663616798816158}
-  _actions: {fileID: 7019703605466397924}
-  _constructions: {fileID: 5828358264671413624}
+  _modifersParent: {fileID: 0}
+  _actionsParent: {fileID: 0}
+  _constructionsParent: {fileID: 0}
   _modiferTemplate: {fileID: 2368761993209783563, guid: 131b3b958cd7eb64283d7c0f88e3b3dd, type: 3}
   _structureIcon: {fileID: 3494737903137901957}
   _structureName: {fileID: 4659843868353249850}
@@ -1481,7 +1481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4266717883385533138}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

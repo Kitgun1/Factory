@@ -1,4 +1,5 @@
 using DG.Tweening;
+using KiMath;
 using UnityEngine;
 
 namespace Factory
@@ -9,8 +10,15 @@ namespace Factory
         [Min(1), SerializeField] private Vector2Int _size = Vector2Int.one;
 
         private Map _map;
-
         private Vector3 _nearCell = Vector3.zero;
+
+        public static MapManage Instance = null;
+
+        private void Awake()
+        {
+            if (Instance == null) Instance = this;
+            else if (Instance = this) Destroy(gameObject);
+        }
 
         private void Start()
         {
@@ -34,10 +42,9 @@ namespace Factory
 
         public void GetNearStrcture(Vector3 worldPosition)
         {
-            var strcture = _map.GetNearStructure(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell);
-            //if (_size.x > ) return;
+            var strcture = _map.GetNearStructure(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell, out Vector2Int positionStructure);
+            if (positionStructure.x == -1 || positionStructure.y == -1) return;
             _nearCell = new Vector3(worldPositionCell.x, 1f, worldPositionCell.y);
-            print(_nearCell);
 
             //if (strcture == null)
             //{
@@ -46,9 +53,9 @@ namespace Factory
             //}
         }
 
-        public void GetStructure(int x, int y)
+        public Structure GetStructure(int x, int y)
         {
-            _map.GetStructure(x, y);
+            return _map.GetStructure(x, y);
         }
 
         public bool TryCreateStructure(Structure structure, int x, int y)
