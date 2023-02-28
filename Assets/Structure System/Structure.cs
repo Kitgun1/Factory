@@ -19,7 +19,7 @@ namespace Factory
         protected StructurePoint PointDown;
         protected StructurePoint PointLeft;
 
-        protected event UnityAction OnUpgrade;
+        //protected event UnityAction OnUpgrade;
 
         private MapManage _mapManage;
         private IEnumerator _sendEnumerator = null;
@@ -57,8 +57,8 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(Modifer[Level]);
-                List<StructurePoint> pointsOutput = GetStructurePoints(StructurePointState.Output);
-                List<StructurePoint> pointsInput = GetStructurePoints(StructurePointState.Input);
+                List<StructurePoint> pointsOutput = GetPoints(StructurePointState.Output);
+                List<StructurePoint> pointsInput = GetPoints(StructurePointState.Input);
 
                 if (pointsInput.Count != 0 || pointsOutput.Count != 0)
                 {
@@ -91,7 +91,7 @@ namespace Factory
                     var structure = _mapManage.GetStructure(position.x, position.y);
                     if (structure != null)
                     {
-                        var pointOutput = structure.GetStructurePoint(StructurePointState.Output, new Vector2Int(pointInput.Axis.x * -1, pointInput.Axis.y * -1));
+                        var pointOutput = structure.GetPointByState(StructurePointState.Output, new Vector2Int(pointInput.Axis.x * -1, pointInput.Axis.y * -1));
                         if (pointOutput.Product != null)
                         {
                             pointInput.Product = pointOutput.Product;
@@ -102,25 +102,16 @@ namespace Factory
             }
         }
 
-        public virtual bool TryUpgrade()
+        public StructurePoint GetPointByState(StructurePointState state, Vector2Int axis)
         {
-            if (Level >= MaxLevel) return false;
-
-            Level++;
-            OnUpgrade?.Invoke();
-            return true;
-        }
-
-        public StructurePoint GetStructurePoint(StructurePointState state, Vector2Int axis)
-        {
-            var points = GetStructurePoints(state);
+            var points = GetPoints(state);
             foreach (var point in points)
                 if (point.Axis == axis) return point;
 
             return null;
         }
 
-        public StructurePoint GetStructurePoint(Vector2Int axis)
+        public StructurePoint GetPoint(Vector2Int axis)
         {
             if (axis == new Vector2Int(0, 1)) return PointUp;
             else if (axis == new Vector2Int(1, 0)) return PointRight;
@@ -130,7 +121,7 @@ namespace Factory
             return null;
         }
 
-        public List<StructurePoint> GetStructurePoints(StructurePointState state)
+        public List<StructurePoint> GetPoints(StructurePointState state)
         {
             List<StructurePoint> result = new List<StructurePoint>();
 
