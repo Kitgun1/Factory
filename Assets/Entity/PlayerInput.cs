@@ -31,6 +31,8 @@ namespace Factory
         {
             _entityMovement.Move(_direction);
             _entityMovement.Rotate(_movementData.Transform, _direction);
+
+            _mapManage.GetNearStrcture(_movementData.Rigidbody.position);
         }
 
         public Vector2 GetDirection(PlatformType type)

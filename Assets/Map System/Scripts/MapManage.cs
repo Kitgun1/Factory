@@ -35,8 +35,9 @@ namespace Factory
         public void GetNearStrcture(Vector3 worldPosition)
         {
             var strcture = _map.GetNearStructure(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell);
-            if (strcture == null) return;
-            _nearCell = new Vector3(worldPositionCell.x, 0f, worldPositionCell.y);
+            //if (_size.x > ) return;
+            _nearCell = new Vector3(worldPositionCell.x, 1f, worldPositionCell.y);
+            print(_nearCell);
 
             //if (strcture == null)
             //{
@@ -61,8 +62,8 @@ namespace Factory
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(_nearCell, Vector3.one * 0.2f);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawCube(_nearCell, Vector3.one);
         }
     }
 }

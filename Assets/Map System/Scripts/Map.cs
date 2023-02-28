@@ -41,7 +41,7 @@ namespace Factory
                 positionStructure.y = -1;
 
             if (positionStructure.x == -1 || positionStructure.y == -1) return null;
-            Debug.Log($"{_cells[positionStructure.x, positionStructure.y]} | {positionStructure.x} ~ {positionStructure.y}");
+            //Debug.Log($"{_cells[positionStructure.x, positionStructure.y]} | {positionStructure.x} ~ {positionStructure.y}");
             return _cells[positionStructure.x, positionStructure.y];
         }
 
@@ -57,6 +57,11 @@ namespace Factory
         {
             _cells[x, y] = structure;
             structure.SetPosition(new Vector2Int(x, y));
+        }
+
+        public void CheckPointInBorder(int x, int y)
+        {
+
         }
     }
 }
