@@ -6,6 +6,12 @@ namespace Factory
     {
         public float CurrentMoveRate() => Modifer[Level];
 
+        private void Start()
+        {
+            Init();
+            StartRoutine();
+        }
+
         private void OnValidate()
         {
             LimitModifer(Modifer);

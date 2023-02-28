@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Factory
 {
-    [RequireComponent(typeof(CreatorPerforms))]
     public class Creator : Structure, ITurn
     {
         [SerializeField] private MeshRenderer _renderer;
@@ -11,28 +12,70 @@ namespace Factory
         [SerializeField] private ProductTemplate _template;
         [SerializeField] private float _rotationDuration;
 
-        private CreatorPerforms _performs;
+        private IEnumerator _createEnumerator = null;
 
-        public float GetCurrentSpeed() => Modifer[Level];
-        public ProductTemplate GetCurrentTemplate() => _template;
+        public float CurrentMoveRate => Modifer[Level];
+        public ProductTemplate CurrentTemplate => _template;
 
         private void Start()
         {
             SetUpgrade();
+            StartRoutine();
         }
 
-        private void OnEnable()
+        public override void StartRoutine()
         {
-            _performs = GetComponent<CreatorPerforms>();
-            OnUpgrade += OnUpgraded;
-            _performs.Spawn += OnProductSpawned;
+            if (_createEnumerator != null)
+                StopRoutine();
+
+            _createEnumerator = CreateRoutine();
+            StartCoroutine(_createEnumerator);
+
+            base.StartRoutine();
         }
 
-        private void OnDisable()
+        public override void StopRoutine()
         {
-            OnUpgrade -= OnUpgraded;
-            _performs.Spawn -= OnProductSpawned;
+            if (_createEnumerator != null)
+            {
+                StopCoroutine(_createEnumerator);
+                _createEnumerator = null;
+            }
+            base.StopRoutine();
         }
+
+        private IEnumerator CreateRoutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(CurrentMoveRate);
+                List<StructurePoint> pointsOutput = GetPoints(StructurePointState.Output);
+                if (pointsOutput.Count > 0)
+                {
+                    foreach (var pointOutput in pointsOutput)
+                    {
+                        if (pointOutput.Product == null)
+                        {
+                            var product = Instantiate(CurrentTemplate.GameObject, PointProduct.position, Quaternion.identity, transform);
+                            pointOutput.Product = product;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         private void OnUpgraded()
         {
@@ -44,7 +87,7 @@ namespace Factory
             product.Init(_template, false);
         }
 
-        private void SetUpgrade(int level = -1)
+        private void SetUpgrade(int level = 0)
         {
             if (level < 0)
                 level = 0;
