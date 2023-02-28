@@ -28,7 +28,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer();
+            LimitModifer(Modifer);
         }
     }
 }

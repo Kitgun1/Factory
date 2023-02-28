@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Factory
 {
@@ -42,7 +41,7 @@ namespace Factory
 
         private void OnProductSpawned(Product product)
         {
-            product.Init(_template);
+            product.Init(_template, false);
         }
 
         private void SetUpgrade(int level = -1)
@@ -55,21 +54,8 @@ namespace Factory
 
         private void OnValidate()
         {
-            if (_materials.Count > MaxLevel)
-            {
-                _materials.RemoveRange(MaxLevel, _materials.Count - MaxLevel);
-            }
-            else if (_materials.Count < MaxLevel)
-            {
-                List<Material> tempLevels = new List<Material>(_materials);
-                for (int i = 0; i < MaxLevel - _materials.Count; i++)
-                {
-                    tempLevels.Add(null);
-                }
-                _materials = new List<Material>(tempLevels);
-            }
-
-            LimitModifer();
+            LimitModifer(Modifer);
+            LimitModifer(_materials);
         }
 
         public void Rotate(Transform transform)
