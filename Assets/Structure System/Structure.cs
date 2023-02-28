@@ -4,10 +4,16 @@ using UnityEngine;
 
 namespace Factory
 {
-    public class Structure : MonoBehaviour
+    public abstract class Structure : MonoBehaviour
     {
         [Min(1), SerializeField] protected int MaxLevel = 10;
         [SerializeField] protected List<float> Modifer;
+        [SerializeField] protected Transform PointProduct;
+
+        [SerializeField] protected StructurePointState Up;
+        [SerializeField] protected StructurePointState Right;
+        [SerializeField] protected StructurePointState Down;
+        [SerializeField] protected StructurePointState Left;
 
         protected int Level;
         protected Quaternion Quaternion;
@@ -29,29 +35,31 @@ namespace Factory
         protected virtual void Init()
         {
             _mapManage = MapManage.Instance;
-            PointUp = new StructurePoint(new Vector2Int(0, 1));
-            PointRight = new StructurePoint(new Vector2Int(1, 0));
-            PointDown = new StructurePoint(new Vector2Int(0, -1));
-            PointLeft = new StructurePoint(new Vector2Int(-1, 0));
+
+            PointUp = new StructurePoint(Up, new Vector2Int(0, 1));
+            PointRight = new StructurePoint(Right, new Vector2Int(1, 0));
+            PointDown = new StructurePoint(Down, new Vector2Int(0, -1));
+            PointLeft = new StructurePoint(Left, new Vector2Int(-1, 0));
         }
 
         public virtual void StartRoutine()
         {
             if (_sendEnumerator != null) StopRoutine();
 
-            _sendEnumerator = Routine();
+            _sendEnumerator = SendRoutine();
             StartCoroutine(_sendEnumerator);
         }
 
         public virtual void StopRoutine()
         {
-            if (_sendEnumerator == null) return;
-
-            StopCoroutine(_sendEnumerator);
-            _sendEnumerator = null;
+            if (_sendEnumerator != null)
+            {
+                StopCoroutine(_sendEnumerator);
+                _sendEnumerator = null;
+            }
         }
 
-        private IEnumerator Routine()
+        private IEnumerator SendRoutine()
         {
             while (true)
             {

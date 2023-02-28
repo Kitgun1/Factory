@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7670910325997606535}
   - component: {fileID: 7670910325997606534}
-  - component: {fileID: 7670910325997606533}
   m_Layer: 0
   m_Name: Creator
   m_TagString: Untagged
@@ -33,7 +32,7 @@ Transform:
   - {fileID: 7925830882186195176}
   - {fileID: 7670910326813834611}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &7670910325997606534
 MonoBehaviour:
@@ -49,11 +48,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxLevel: 5
   Modifer:
-  - 10
+  - 1
   - 9
   - 7
   - 6
   - 5
+  PointProduct: {fileID: 7670910326813834611}
+  Up: 0
+  Right: 0
+  Down: 0
+  Left: 0
   _renderer: {fileID: 9058174732944837511}
   _materials:
   - {fileID: 2100000, guid: 26eefbe3f4ed6a543a2a96e50dc2193b, type: 2}
@@ -63,19 +67,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 70bd7a3e8bfd55a48b2cdb88bebe2e92, type: 2}
   _template: {fileID: 11400000, guid: fcfc745257bb3dc4eb17007a9db0d84f, type: 2}
   _rotationDuration: 0
---- !u!114 &7670910325997606533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7670910325997606532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f06601cd21056147bdc8b24b236f454, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _creationPoint: {fileID: 7670910326813834611}
 --- !u!1 &7670910326813834610
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +77,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7670910326813834611}
   m_Layer: 0
-  m_Name: Creation Point
+  m_Name: Point Product
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
