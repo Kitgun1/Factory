@@ -1,3 +1,4 @@
+using Factory;
 using System;
 using System.Drawing;
 using UnityEngine;
@@ -75,6 +76,30 @@ namespace KiMath
                 positions[i] += offset;
             }
         }
+
+        #endregion
+
+        #region Borders
+
+        public static bool PointInBorders(this Vector2 point, FloatRange xRange, FloatRange yRange)
+        {
+            bool xInBorders = NumberInBorders(point.x, xRange);
+            bool yInBorders = NumberInBorders(point.y, yRange);
+
+            return xInBorders && yInBorders;
+        }
+
+        public static bool PointInBorders(this Vector2Int point, IntRange xRange, IntRange yRange)
+        {
+            bool xInBorders = NumberInBorders(point.x, xRange);
+            bool yInBorders = NumberInBorders(point.y, yRange);
+
+            return xInBorders && yInBorders;
+        }
+
+        private static bool NumberInBorders(float number, FloatRange range) => number < range.Max && number > range.Min;
+
+        private static bool NumberInBorders(int number, IntRange range) => number < range.Max && number > range.Min;
 
         #endregion
     }
