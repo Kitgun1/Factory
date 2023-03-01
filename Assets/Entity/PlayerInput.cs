@@ -1,18 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Factory
 {
     public class PlayerInput : MonoBehaviour
     {
         [SerializeField] private Joystick _joystick;
+        [SerializeField] private List<PlayerHotKeyData> _hotKeys;
         [SerializeField] private EntityMovementData _movementData;
         [SerializeField] private PlayerAnimation _animation;
 
         private EntityMovement _entityMovement;
         private Vector2 _direction = Vector2.zero;
 
-       [SerializeField] private MapManage _mapManage;
+        public event UnityAction<PlayerActionType> OnHotKeyPress;
 
+        [SerializeField] private MapManage _mapManage;
         private void Awake()
         {
             _entityMovement = new EntityMovement(_movementData);
@@ -24,7 +28,13 @@ namespace Factory
 
             _animation.SetAnimationFloat(AnimationParamType.Speed, GetSpeed(_direction));
 
-            //_mapManage.GetNearCell(transform.position);
+            foreach (var hotKey in _hotKeys)
+            {
+                if (Input.GetKeyDown(hotKey.KeyCode))
+                {
+                    OnHotKeyPress?.Invoke(hotKey.Action);
+                }
+            }
         }
 
         private void FixedUpdate()
@@ -54,7 +64,7 @@ namespace Factory
             if (vector.x == 0 && vector.y == 0) return 0f;
 
             float speed = 0;
-            if (Mathf.Abs(vector.x) > 0f) speed = Mathf.Abs(vector.x); 
+            if (Mathf.Abs(vector.x) > 0f) speed = Mathf.Abs(vector.x);
             if (Mathf.Abs(vector.y) > speed) speed = Mathf.Abs(vector.y);
 
             return speed;

@@ -74,7 +74,7 @@ namespace Factory
 
             if (_map.CheckPointInBorder(x, y))
             {
-                structure = Instantiate(structure, _nearCell, Quaternion.identity, transform);
+                structure = Instantiate(structure, _nearCell + Vector3.one * 0.5f, Quaternion.identity, transform);
                 _map.SetStructure(structure, x, y);
                 return true;
             }
