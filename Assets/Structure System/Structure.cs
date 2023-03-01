@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Factory
 {
@@ -9,22 +10,15 @@ namespace Factory
         [Min(1), SerializeField] protected int MaxLevel = 10;
         [SerializeField] protected List<float> Modifer;
         [SerializeField] protected Transform PointProduct;
+        [SerializeField] protected StrucurePointsAxisData StructurePointsAxis;
 
-        [SerializeField] protected StructurePointState Up;
-        [SerializeField] protected StructurePointState Right;
-        [SerializeField] protected StructurePointState Down;
-        [SerializeField] protected StructurePointState Left;
 
         protected int Level;
         protected Quaternion Quaternion;
         protected Vector2Int Position;
 
-        protected StructurePoint PointUp;
-        protected StructurePoint PointRight;
-        protected StructurePoint PointDown;
-        protected StructurePoint PointLeft;
-
         //protected event UnityAction OnUpgrade;
+        protected event UnityAction<Product> OnProductGet;
 
         private MapManage _mapManage;
         private IEnumerator _sendEnumerator = null;
@@ -36,10 +30,10 @@ namespace Factory
         {
             _mapManage = MapManage.Instance;
 
-            PointUp = new StructurePoint(Up, new Vector2Int(0, 1));
-            PointRight = new StructurePoint(Right, new Vector2Int(1, 0));
-            PointDown = new StructurePoint(Down, new Vector2Int(0, -1));
-            PointLeft = new StructurePoint(Left, new Vector2Int(-1, 0));
+            StructurePointsAxis.PointUp = new StructurePoint(StructurePointsAxis.Up, new Vector2Int(0, 1));
+            StructurePointsAxis.PointRight = new StructurePoint(StructurePointsAxis.Right, new Vector2Int(1, 0));
+            StructurePointsAxis.PointDown = new StructurePoint(StructurePointsAxis.Down, new Vector2Int(0, -1));
+            StructurePointsAxis.PointLeft = new StructurePoint(StructurePointsAxis.Left, new Vector2Int(-1, 0));
         }
 
         public virtual void StartRoutine()
@@ -67,6 +61,7 @@ namespace Factory
                 List<StructurePoint> pointsOutput = GetPoints(StructurePointState.Output);
                 List<StructurePoint> pointsInput = GetPoints(StructurePointState.Input);
 
+                // Point move to output
                 if (pointsInput.Count != 0 || pointsOutput.Count != 0)
                 {
                     foreach (var pointInput in pointsInput)
@@ -86,12 +81,14 @@ namespace Factory
                             if (emptyPointOutput != null)
                             {
                                 emptyPointOutput.Product = pointInput.Product;
+                                OnProductGet?.Invoke(emptyPointOutput.Product);
                                 pointInput.Product = null;
                             }
                         }
                     }
                 }
 
+                // Point get from another object
                 foreach (var pointInput in pointsInput)
                 {
                     Vector2Int position = new Vector2Int(Position.x + pointInput.Axis.x, Position.y + pointInput.Axis.x);
@@ -120,10 +117,10 @@ namespace Factory
 
         public StructurePoint GetPoint(Vector2Int axis)
         {
-            if (axis == new Vector2Int(0, 1)) return PointUp;
-            else if (axis == new Vector2Int(1, 0)) return PointRight;
-            else if (axis == new Vector2Int(0, -1)) return PointDown;
-            else if (axis == new Vector2Int(-1, 0)) return PointLeft;
+            if (axis == new Vector2Int(0, 1)) return StructurePointsAxis.PointUp;
+            else if (axis == new Vector2Int(1, 0)) return StructurePointsAxis.PointRight;
+            else if (axis == new Vector2Int(0, -1)) return StructurePointsAxis.PointDown;
+            else if (axis == new Vector2Int(-1, 0)) return StructurePointsAxis.PointLeft;
 
             return null;
         }
@@ -132,14 +129,14 @@ namespace Factory
         {
             List<StructurePoint> result = new List<StructurePoint>();
 
-            if (PointUp.State == state)
-                result.Add(PointUp);
-            if (PointRight.State == state)
-                result.Add(PointRight);
-            if (PointDown.State == state)
-                result.Add(PointDown);
-            if (PointLeft.State == state)
-                result.Add(PointLeft);
+            if (StructurePointsAxis.PointUp.State == state)
+                result.Add(StructurePointsAxis.PointUp);
+            if (StructurePointsAxis.PointRight.State == state)
+                result.Add(StructurePointsAxis.PointRight);
+            if (StructurePointsAxis.PointDown.State == state)
+                result.Add(StructurePointsAxis.PointDown);
+            if (StructurePointsAxis.PointLeft.State == state)
+                result.Add(StructurePointsAxis.PointLeft);
 
             if (result.Count == 0)
                 return null;
