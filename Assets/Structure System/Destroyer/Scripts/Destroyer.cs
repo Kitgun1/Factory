@@ -8,10 +8,21 @@ namespace Factory
     [RequireComponent(typeof(BoxCollider))]
     public class Destroyer : Structure
     {
-        [Layer, SerializeField] private int _layerProduct;
-        private IEnumerator _destroyerEnumerator = null;
+        private void OnEnable()
+        {
+            Init();
+            ProductGet += OnProductGet;
+        }
 
-        private Queue<Product> _inside = new Queue<Product>();
+        private void OnDisable()
+        {
+            ProductGet -= OnProductGet;
+        }
+
+        private void OnProductGet(Product product)
+        {
+
+        }
 
         private void OnValidate()
         {
