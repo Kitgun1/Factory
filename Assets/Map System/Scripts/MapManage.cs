@@ -72,9 +72,13 @@ namespace Factory
         {
             if (_map.GetStructure(x, y) != null) return false;
 
-            structure = Instantiate(structure, _nearCell, Quaternion.identity, transform);
-            _map.SetStructure(structure, x, y);
-            return true;
+            if (_map.CheckPointInBorder(x, y))
+            {
+                structure = Instantiate(structure, _nearCell, Quaternion.identity, transform);
+                _map.SetStructure(structure, x, y);
+                return true;
+            }
+            return false;
         }
 
         private void OnDrawGizmos()

@@ -59,9 +59,11 @@ namespace Factory
             structure.SetPosition(new Vector2Int(x, y));
         }
 
-        public void CheckPointInBorder(int x, int y)
+        public bool CheckPointInBorder(int x, int y)
         {
-
+            if (x > _cells.GetLength(0) || x < 0 || y > _cells.GetLength(1) || y < 0)
+                return false;
+            return true;
         }
     }
 }
