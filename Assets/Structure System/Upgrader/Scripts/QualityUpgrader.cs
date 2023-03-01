@@ -7,18 +7,29 @@ namespace Factory
 	{
         [SerializeField] private List<float> QualityImprovementAmount;
 
-        protected override void Action(Product product)
+        private void OnEnable()
         {
-            if (product is IQuality quality)
-                quality.SetQuality(QualityImprovementAmount[Level]);
-            if (product is IUpgradeable upgradeable)
-                upgradeable.TryUpgrade();
+            Init();
+            ProductGet += OnProductGet;
+        }
+
+        private void OnDisable()
+        {
+            ProductGet -= OnProductGet;
         }
 
         private void OnValidate()
         {
             LimitModifer(Modifer);
             LimitModifer(QualityImprovementAmount);
+        }
+
+        protected override void Action(Product product)
+        {
+            if (product is IQuality quality)
+                quality.SetQuality(QualityImprovementAmount[Level]);
+            if (product is IUpgradeable upgradeable)
+                upgradeable.TryUpgrade();
         }
     }
 }

@@ -4,15 +4,26 @@ namespace Factory
 {
     public class VisualUpgrader : Interacter
     {
-        protected override void Action(Product product)
+        private void OnEnable()
         {
-            if(product is IUpgradeable upgradeable)
-                upgradeable.TryUpgrade();
+            Init();
+            ProductGet += OnProductGet;
+        }
+
+        private void OnDisable()
+        {
+            ProductGet -= OnProductGet;
         }
 
         private void OnValidate()
         {
             LimitModifer(Modifer);
+        }
+
+        protected override void Action(Product product)
+        {
+            if(product is IUpgradeable upgradeable)
+                upgradeable.TryUpgrade();
         }
     }
 }
