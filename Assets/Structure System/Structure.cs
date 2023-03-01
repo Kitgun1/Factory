@@ -18,7 +18,7 @@ namespace Factory
         protected Vector2Int Position;
 
         //protected event UnityAction OnUpgrade;
-        protected event UnityAction<Product> OnProductGet;
+        protected event UnityAction<Product> ProductGet;
 
         private MapManage _mapManage;
         private IEnumerator _sendEnumerator = null;
@@ -81,7 +81,7 @@ namespace Factory
                             if (emptyPointOutput != null)
                             {
                                 emptyPointOutput.Product = pointInput.Product;
-                                OnProductGet?.Invoke(emptyPointOutput.Product);
+                                ProductGet?.Invoke(emptyPointOutput.Product);
                                 pointInput.Product = null;
                             }
                         }

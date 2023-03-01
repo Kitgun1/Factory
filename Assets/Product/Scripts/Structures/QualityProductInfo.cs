@@ -6,5 +6,6 @@ namespace Factory
     public struct QualityProductInfo
 	{
         public Material Material;
+        public long Price;
 	}
 }

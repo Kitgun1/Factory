@@ -9,14 +9,15 @@ namespace Factory
 
         protected override void Action(Product product)
         {
-            if (product is IQuality upgradeable)
-                upgradeable.SetQuality(QualityImprovementAmount[Level]);
+            if (product is IQuality quality)
+                quality.SetQuality(QualityImprovementAmount[Level]);
+            if (product is IUpgradeable upgradeable)
+                upgradeable.TryUpgrade();
         }
 
         private void OnValidate()
         {
             LimitModifer(Modifer);
-            LimitModifer(MaxProductCount);
             LimitModifer(QualityImprovementAmount);
         }
     }

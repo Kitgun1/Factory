@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using System;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,7 +18,7 @@ namespace Factory
 
 		[Space(2)]
 		public TMP_Text BalanceText;
-		public float BalanceValue;
-		public float BalanceDefaultValue;
+		public long BalanceValue;
+		public long BalanceDefaultValue;
 	}
 }

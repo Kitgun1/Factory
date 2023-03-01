@@ -7,7 +7,5 @@ namespace Factory
 	public class ProductLevelKeeper : ScriptableObject
 	{
 		[SerializeField] private List<ProductTemplate> _productLevels = new List<ProductTemplate>();
-
-		public IReadOnlyCollection<ProductTemplate> Products => _productLevels;
 	}
 }

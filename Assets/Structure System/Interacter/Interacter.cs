@@ -5,16 +5,24 @@ using UnityEngine;
 
 namespace Factory
 {
-    [RequireComponent(typeof(Collider))]
     public abstract class Interacter : Structure
     {
-        [SerializeField] protected List<float> MaxProductCount;
-
-        private void OnTriggerEnter(Collider other)
+        private void OnEnable()
         {
-            
+            Init();
+            ProductGet += OnProductGet;
+        }
+
+        private void OnDisable()
+        {
+            ProductGet -= OnProductGet;
         }
 
         protected abstract void Action(Product product);
+
+        private void OnProductGet(Product product)
+        {
+            Action(product);
+        }
     }
 }

@@ -22,7 +22,9 @@ namespace Factory
         public void SetQuality(float value)
         {
             if (value > 0 && value < _maxQuality)
-            Quality = value;
+                Quality = value;
         }
+
+        public override long Price() => (long)(_template.Price(Level) * (Quality * 0.01f));
     }
 }

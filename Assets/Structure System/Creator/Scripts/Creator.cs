@@ -5,7 +5,6 @@ using KiMath;
 
 namespace Factory
 {
-    [RequireComponent(typeof(CreatorPerforms))]
     public class Creator : Structure, ITurn
     {
         [SerializeField] private MeshRenderer _renderer;
@@ -13,25 +12,12 @@ namespace Factory
         [SerializeField] private ProductTemplate _template;
         [SerializeField] private float _rotationDuration;
 
-        private CreatorPerforms _performs;
-
         public float GetCurrentSpeed() => Modifer[Level];
         public ProductTemplate GetCurrentTemplate() => _template;
 
         private void Start()
         {
             SetUpgrade();
-        }
-
-        private void OnEnable()
-        {
-            _performs = GetComponent<CreatorPerforms>();
-            _performs.Spawn += OnProductSpawned;
-        }
-
-        private void OnDisable()
-        {
-            _performs.Spawn -= OnProductSpawned;
         }
 
         private void OnUpgraded()

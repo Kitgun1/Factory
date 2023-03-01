@@ -11,11 +11,13 @@ namespace Factory
         public virtual void Init(ProductTemplate template, bool cloned)
         {
             Templtate = template;
-            Level = 0;
             Cloned = cloned;
+            Level = 0;
 
             UpdateInfo();
         }
+
+        public abstract long Price();
 
         public bool TryUpgrade()
         {

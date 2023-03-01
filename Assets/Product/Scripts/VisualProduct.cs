@@ -15,6 +15,8 @@ namespace Factory
             base.Init(template, cloned);
         }
 
+        public override long Price() => Templtate.Price(Level);
+
         protected override void UpdateInfo()
         {
             VisualProductInfo info = _template.LevelInfo[Level];
