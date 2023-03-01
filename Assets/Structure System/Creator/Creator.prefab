@@ -32,7 +32,7 @@ Transform:
   - {fileID: 7925830882186195176}
   - {fileID: 7670910326813834611}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &7670910325997606534
 MonoBehaviour:
@@ -49,15 +49,16 @@ MonoBehaviour:
   MaxLevel: 5
   Modifer:
   - 1
-  - 9
-  - 7
-  - 6
-  - 5
-  PointProduct: {fileID: 7670910326813834611}
-  Up: 0
-  Right: 0
-  Down: 0
-  Left: 0
+  - 1
+  - 1
+  - 1
+  - 1
+  StayPointProduct: {fileID: 7670910326813834611}
+  StructurePointsAxis:
+    Up: -1
+    Right: 0
+    Down: 0
+    Left: 0
   _renderer: {fileID: 9058174732944837511}
   _materials:
   - {fileID: 2100000, guid: 26eefbe3f4ed6a543a2a96e50dc2193b, type: 2}

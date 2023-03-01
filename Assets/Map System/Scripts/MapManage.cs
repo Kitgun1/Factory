@@ -9,8 +9,11 @@ namespace Factory
         [SerializeField] private GameObject _platform;
         [Min(1), SerializeField] private Vector2Int _size = Vector2Int.one;
 
+        [SerializeField] private Structure _structure;
+
         private Map _map;
         private Vector3 _nearCell = Vector3.zero;
+        private Vector2Int _currentPositionInMap;
 
         public static MapManage Instance = null;
 
@@ -23,6 +26,13 @@ namespace Factory
         private void Start()
         {
             Init();
+        }
+
+        private void Update()
+        {
+            if (_structure == null) return;
+
+            TryCreateStructure(_structure, _currentPositionInMap.x, _currentPositionInMap.y);
         }
 
         private void Init()
@@ -42,9 +52,9 @@ namespace Factory
 
         public void GetNearStrcture(Vector3 worldPosition)
         {
-            var strcture = _map.GetNearStructure(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell, out Vector2Int positionStructure);
-            if (positionStructure.x == -1 || positionStructure.y == -1) return;
-            _nearCell = new Vector3(worldPositionCell.x, 1f, worldPositionCell.y);
+            var strcture = _map.GetNearStructure(new Vector2(worldPosition.x, worldPosition.z), _size, out Vector2 worldPositionCell, out _currentPositionInMap);
+            if (_currentPositionInMap.x == -1 || _currentPositionInMap.y == -1) return;
+            _nearCell = new Vector3(worldPositionCell.x, 0.5f, worldPositionCell.y);
 
             //if (strcture == null)
             //{
