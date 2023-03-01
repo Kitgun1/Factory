@@ -9,7 +9,6 @@ namespace Factory
         private void Start()
         {
             Init();
-            StartRoutine();
         }
 
         private void OnValidate()

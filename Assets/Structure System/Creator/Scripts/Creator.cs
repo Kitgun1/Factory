@@ -1,28 +1,64 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using KiMath;
 
 namespace Factory
 {
-    public class Creator : Structure, ITurn
+
+    public class Creator : Structure
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
         [SerializeField] private ProductTemplate _template;
-        [SerializeField] private float _rotationDuration;
 
-        public float GetCurrentSpeed() => Modifer[Level];
-        public ProductTemplate GetCurrentTemplate() => _template;
+        private IEnumerator _createEnumerator = null;
+
+        public float CurrentMoveRate => Modifer[Level];
+        public ProductTemplate CurrentTemplate => _template;
 
         private void Start()
         {
+            Init();
             SetUpgrade();
         }
 
-        private void OnUpgraded()
+        public override void StartRoutine()
         {
-            SetUpgrade(Level);
+            if (_createEnumerator != null) StopRoutine();
+
+            _createEnumerator = CreateRoutine();
+            StartCoroutine(_createEnumerator);
+
+            base.StartRoutine();
+        }
+
+        public override void StopRoutine()
+        {
+            if (_createEnumerator != null)
+            {
+                StopCoroutine(_createEnumerator);
+                _createEnumerator = null;
+            }
+            base.StopRoutine();
+        }
+
+        private IEnumerator CreateRoutine()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(CurrentMoveRate);
+                var pointsOutput = GetPointsByState(StructurePointState.Output);
+                foreach (var point in pointsOutput)
+                {
+                    if (point.Product == null)
+                    {
+                        var product = Instantiate(_template.Product, StayPointProduct.position, Quaternion.identity, transform);
+                        point.Product = product;
+                        OnProductSpawned(product);
+                        break;
+                    }
+                }
+            }
         }
 
         private void OnProductSpawned(Product product)
@@ -42,11 +78,6 @@ namespace Factory
         {
             LimitModifer(Modifer);
             LimitModifer(_materials);
-        }
-
-        public void Rotate(Transform transform)
-        {
-            EntityTurner.Action(transform, _rotationDuration);
         }
     }
 }
