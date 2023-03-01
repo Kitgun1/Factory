@@ -63,7 +63,7 @@ Transform:
   - {fileID: 2059797525652535398}
   - {fileID: 6240185955423862217}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3507976090364532020
 MonoBehaviour:
@@ -80,12 +80,12 @@ MonoBehaviour:
   MaxLevel: 1
   Modifer:
   - 1
-  PointProduct: {fileID: 6240185955423862217}
-  Up: 0
-  Right: 0
-  Down: 0
-  Left: 0
-  _pointCenter: {fileID: 6240185955423862217}
+  StayPointProduct: {fileID: 6240185955423862217}
+  StructurePointsAxis:
+    Up: -1
+    Right: 0
+    Down: 1
+    Left: 0
 --- !u!1001 &2082858361652185471
 PrefabInstance:
   m_ObjectHideFlags: 0
