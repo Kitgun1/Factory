@@ -15,7 +15,7 @@ namespace Factory
             base.Init(template, cloned);
         }
 
-        public override long Price() => Templtate.Price(Level);
+        public override double Price() => Templtate.Price(Level);
 
         protected override void UpdateInfo()
         {

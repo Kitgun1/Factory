@@ -129,7 +129,7 @@ Transform:
   - {fileID: 1013896105653321825}
   - {fileID: 7910952420987715520}
   m_Father: {fileID: 0}
-  m_RootOrder: 28
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7284809399932497624
 MeshFilter:
@@ -218,13 +218,12 @@ MonoBehaviour:
   Modifer:
   - 4
   - 3
-  MaxProductCount:
-  - 3
-  - 4
-  _moveDuration: 0.4
-  _holdPosition: {fileID: 1013896105653321825}
-  _relizePosition: {fileID: 2318138721456377532}
-  _skipPosition: {fileID: 7910952420987715520}
+  StayPointProduct: {fileID: 1013896105653321825}
+  StructurePointsAxis:
+    Up: -1
+    Right: 0
+    Down: 1
+    Left: 0
   QualityImprovementAmount:
-  - 0.1
-  - 0.2
+  - 40
+  - 20

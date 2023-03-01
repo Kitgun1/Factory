@@ -12,7 +12,7 @@ namespace Factory
             CurrencySetDefaultAll();
         }
 
-        public long GetBalance(CurrencyType type)
+        public double GetBalance(CurrencyType type)
         {
             foreach (var currency in _currencies)
                 if (currency.CurrencyType == type) return currency.BalanceValue;
@@ -20,7 +20,7 @@ namespace Factory
             return 0;
         }
 
-        public void CurrencySet(CurrencyType type, long value)
+        public void CurrencySet(CurrencyType type, double value)
         {
             for (int i = 0; i < _currencies.Count; i++)
             {
@@ -34,21 +34,22 @@ namespace Factory
             DisplayCurrency(type);
         }
 
-        public void CurrencyTransfer(CurrencyType type, long value)
+        public void CurrencyTransfer(CurrencyType type, double value)
         {
             for (int i = 0; i < _currencies.Count; i++)
             {
                 if (_currencies[i].CurrencyType == type)
                 {
                     var temp = _currencies[i];
-                    temp.BalanceValue -= value;
+                    temp.BalanceValue += value;
                     _currencies[i] = temp;
                 }
             }
+
             DisplayCurrency(type);
         }
 
-        public void CurrencyTransfer(CurrencyType type, long value, out long walletBalance)
+        public void CurrencyTransfer(CurrencyType type, double value, out double walletBalance)
         {
             walletBalance = 0;
 
@@ -79,7 +80,7 @@ namespace Factory
             DisplayCurrency(type);
         }
 
-        public void CurrencySetAll(long value)
+        public void CurrencySetAll(double value)
         {
             for (int i = 0; i < _currencies.Count; i++)
             {

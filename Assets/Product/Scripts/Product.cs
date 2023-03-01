@@ -17,7 +17,7 @@ namespace Factory
             UpdateInfo();
         }
 
-        public abstract long Price();
+        public abstract double Price();
 
         public bool TryUpgrade()
         {

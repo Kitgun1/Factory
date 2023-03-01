@@ -18,7 +18,7 @@ namespace Factory
 
 		[Space(2)]
 		public TMP_Text BalanceText;
-		public long BalanceValue;
-		public long BalanceDefaultValue;
+		public double BalanceValue;
+		public double BalanceDefaultValue;
 	}
 }

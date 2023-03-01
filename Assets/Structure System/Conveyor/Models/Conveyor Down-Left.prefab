@@ -49,7 +49,12 @@ MonoBehaviour:
   MaxLevel: 1
   Modifer:
   - 1
-  _pointCenter: {fileID: 4993067846494753943}
+  StayPointProduct: {fileID: 4993067846494753943}
+  StructurePointsAxis:
+    Up: 0
+    Right: 0
+    Down: 1
+    Left: -1
 --- !u!1 &6598699720401249210
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ namespace Factory
     [System.Serializable]
     public struct VisualProductInfo
     {
-        public long Price;
+        public double Price;
         public Material Material;
         public Mesh Mesh;
     }

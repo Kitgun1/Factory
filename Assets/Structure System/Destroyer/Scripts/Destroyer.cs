@@ -1,6 +1,3 @@
-using NaughtyAttributes;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Factory
@@ -19,9 +16,9 @@ namespace Factory
             ProductGet -= OnProductGet;
         }
 
-        private void OnProductGet(Product product)
+        protected virtual void OnProductGet(Product product)
         {
-
+            Destroy(product.gameObject);
         }
 
         private void OnValidate()

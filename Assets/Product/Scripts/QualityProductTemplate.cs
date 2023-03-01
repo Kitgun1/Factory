@@ -10,7 +10,7 @@ namespace Factory
         public QualityProductInfo[] LevelInfo => _levelInfo;
         public override int MaxLevel() => _levelInfo.Length - 1;
 
-        public override long Price(int level)
+        public override double Price(int level)
         {
             if (level > 0 && level < MaxLevel())
                 return _levelInfo[level].Price;

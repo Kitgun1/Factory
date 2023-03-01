@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Numerics;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Factory
@@ -7,10 +6,12 @@ namespace Factory
 	public class Seller : Destroyer
 	{
         [SerializeField] private Wallet _wallet;
+        [SerializeField] private List<float> SellQuality;
 
         private void OnEnable()
         {
             Init();
+            _wallet = FindObjectOfType<Wallet>();
             ProductGet += OnProductGet;
         }
 
@@ -19,14 +20,15 @@ namespace Factory
             ProductGet -= OnProductGet;
         }
 
-        private void OnProductGet(Product product)
+        protected override void OnProductGet(Product product)
         {
-            float modifier = Modifer[Level];
+            double modifier = SellQuality[Level] * 0.01f;
 
             if (modifier > 1 || modifier < 0)
                 modifier = 1;
-
-            _wallet.CurrencyTransfer(CurrencyType.Coin, (int)(product.Price() * modifier));
+            
+            _wallet.CurrencyTransfer(CurrencyType.Coin, Mathf.RoundToInt((float)(product.Price() * modifier)));
+            base.OnProductGet(product);
         }
 
         private void OnValidate()

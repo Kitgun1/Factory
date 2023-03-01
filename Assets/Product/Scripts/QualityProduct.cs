@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Factory
 {
 	public class QualityProduct : Product, IQuality
@@ -6,7 +8,7 @@ namespace Factory
 
         private QualityProductTemplate _template;
 
-        private const float _maxQuality = 1;
+        private const float _maxQuality = 100;
 
         public override void Init(ProductTemplate template, bool cloned)
         {
@@ -25,6 +27,6 @@ namespace Factory
                 Quality = value;
         }
 
-        public override long Price() => (long)(_template.Price(Level) * (Quality * 0.01f));
+        public override double Price() => (_template.Price(Level) * (Quality * 0.01f));
     }
 }
