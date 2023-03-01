@@ -17,9 +17,9 @@ namespace Factory
         public float CurrentMoveRate => Modifer[Level];
         public ProductTemplate CurrentTemplate => _template;
 
-        private void Start()
+        private void Awake()
         {
-            SetUpgrade();
+            Init();
             StartRoutine();
         }
 
@@ -49,14 +49,15 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(CurrentMoveRate);
-                List<StructurePoint> pointsOutput = GetPoints(StructurePointState.Output);
+                List<StructurePoint> pointsOutput = GetPointsByState(StructurePointState.Output);
+
                 if (pointsOutput.Count > 0)
                 {
                     foreach (var pointOutput in pointsOutput)
                     {
                         if (pointOutput.Product == null)
                         {
-                            var product = Instantiate(CurrentTemplate.GameObject, PointProduct.position, Quaternion.identity, transform);
+                            var product = Instantiate(CurrentTemplate.GameObject, StayPointProduct.position, Quaternion.identity, transform);
                             pointOutput.Product = product;
                             break;
                         }
