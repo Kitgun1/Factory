@@ -1,42 +1,64 @@
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using KiMath;
+using System.Collections;
 
 namespace Factory
 {
-    [RequireComponent(typeof(CreatorPerforms))]
-    public class Creator : Structure, ITurn
+    public class Creator : Structure
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<Material> _materials;
         [SerializeField] private ProductTemplate _template;
-        [SerializeField] private float _rotationDuration;
 
-        private CreatorPerforms _performs;
+        private IEnumerator _createEnumerator = null;
 
-        public float GetCurrentSpeed() => Modifer[Level];
-        public ProductTemplate GetCurrentTemplate() => _template;
+        public float CurrentMoveRate => Modifer[Level];
+        public ProductTemplate CurrentTemplate => _template;
 
         private void Start()
         {
+            Init();
             SetUpgrade();
         }
 
-        private void OnEnable()
+        public override void StartRoutine()
         {
-            _performs = GetComponent<CreatorPerforms>();
-            _performs.Spawn += OnProductSpawned;
+            if (_createEnumerator != null) StopRoutine();
+
+            _createEnumerator = CreateRoutine();
+            StartCoroutine(_createEnumerator);
+
+            base.StartRoutine();
         }
 
-        private void OnDisable()
+        public override void StopRoutine()
         {
-            _performs.Spawn -= OnProductSpawned;
+            if (_createEnumerator != null)
+            {
+                StopCoroutine(_createEnumerator);
+                _createEnumerator = null;
+            }
+            base.StopRoutine();
         }
 
-        private void OnUpgraded()
+        private IEnumerator CreateRoutine()
         {
-            SetUpgrade(Level);
+            while (true)
+            {
+                yield return new WaitForSeconds(CurrentMoveRate);
+                var pointsOutput = GetPointsByState(StructurePointState.Output);
+                foreach (var point in pointsOutput)
+                {
+                    if (point.Product == null)
+                    {
+                        var product = Instantiate(_template.GameObject, StayPointProduct.position, Quaternion.identity, transform);
+                        point.Product = product;
+                        OnProductSpawned(product);
+                        break;
+                    }
+                }
+            }
         }
 
         private void OnProductSpawned(Product product)
@@ -56,11 +78,6 @@ namespace Factory
         {
             LimitModifer(Modifer);
             LimitModifer(_materials);
-        }
-
-        public void Rotate(Transform transform)
-        {
-            EntityTurner.Action(transform, _rotationDuration);
         }
     }
 }
