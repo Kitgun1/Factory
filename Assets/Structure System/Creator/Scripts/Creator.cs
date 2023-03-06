@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 namespace Factory
@@ -13,7 +14,7 @@ namespace Factory
 
         private IEnumerator _createEnumerator = null;
 
-        public float CurrentMoveRate => Modifer[Level];
+        public float CurrentMoveRate => SpeedTickModifers[Level];
         public ProductTemplate CurrentTemplate => _template;
 
         private void Start()
@@ -22,24 +23,21 @@ namespace Factory
             SetUpgrade();
         }
 
-        public override void StartRoutine()
+        public void StartRoutine()
         {
             if (_createEnumerator != null) StopRoutine();
 
             _createEnumerator = CreateRoutine();
             StartCoroutine(_createEnumerator);
-
-            base.StartRoutine();
         }
 
-        public override void StopRoutine()
+        public void StopRoutine()
         {
             if (_createEnumerator != null)
             {
                 StopCoroutine(_createEnumerator);
                 _createEnumerator = null;
             }
-            base.StopRoutine();
         }
 
         private IEnumerator CreateRoutine()
@@ -47,15 +45,38 @@ namespace Factory
             while (true)
             {
                 yield return new WaitForSeconds(CurrentMoveRate);
-                var pointsOutput = GetPointsByState(StructurePointState.Output);
-                foreach (var point in pointsOutput)
+                List<StructurePointData> pointsOutput = this.GetPoints(PointState.Output);
+
+                List<StructurePointData> points = this.GetPoints(PointState.Output);
+
+                CreateProduct(points);
+            }
+        }
+
+        private void CreateProduct(List<StructurePointData> points)
+        {
+            List<StructurePointData> pointsPriority = this.GetPoints(PointState.Output, PriorityType.Main);
+            List<StructurePointData> pointsWithoutPriority = this.GetPoints(PointState.Output, PriorityType.Secendory);
+            List<StructurePointData> resultPoints;
+
+            if (pointsPriority.Count > 0)
+                resultPoints = pointsPriority;
+            else if (pointsWithoutPriority.Count > 0)
+                resultPoints = pointsWithoutPriority;
+            else return;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                for (int j = 0; j < resultPoints.Count; j++)
                 {
-                    if (point.Product == null)
+                    if (resultPoints[i].Axis == points[i].Axis * -1 && resultPoints[i].Product == null && points[i].Product == null)
                     {
                         var product = Instantiate(_template.Product, StayPointProduct.position, Quaternion.identity, transform);
-                        point.Product = product;
+                        var temp = points[i];
+                        temp.Product = product;
+                        points[i] = temp;
                         OnProductSpawned(product);
-                        break;
+                        return;
                     }
                 }
             }
@@ -76,8 +97,8 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer(Modifer);
-            LimitModifer(_materials);
+            LimitList(SpeedTickModifers, MaxLevel);
+            LimitList(_materials, MaxLevel);
         }
     }
 }

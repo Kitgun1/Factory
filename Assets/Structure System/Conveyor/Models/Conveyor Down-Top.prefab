@@ -81,11 +81,11 @@ MonoBehaviour:
   Modifer:
   - 1
   StayPointProduct: {fileID: 6240185955423862217}
-  StructurePointsAxis:
-    Up: -1
-    Right: 0
-    Down: 1
-    Left: 0
+  StructurePoints:
+    StateUp: -1
+    StateRight: 0
+    StateDown: 1
+    StateLeft: 0
 --- !u!1001 &2082858361652185471
 PrefabInstance:
   m_ObjectHideFlags: 0

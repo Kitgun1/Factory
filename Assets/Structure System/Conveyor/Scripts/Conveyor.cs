@@ -4,7 +4,7 @@ namespace Factory
 {
     public class Conveyor : Structure
     {
-        public float CurrentMoveRate() => Modifer[Level];
+        public float CurrentMoveRate() => SpeedTickModifers[Level];
 
         private void Start()
         {
@@ -13,7 +13,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer(Modifer);
+            LimitList(SpeedTickModifers, MaxLevel);
         }
     }
 }

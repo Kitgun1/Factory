@@ -47,7 +47,7 @@ namespace Factory
 
         public Structure GetStructure(int x, int y)
         {
-            if (x > _cells.GetLength(0) || x < 0 || y > _cells.GetLength(1) || y < 0)
+            if (x >= _cells.GetLength(0) || x < 0 || y >= _cells.GetLength(1) || y < 0)
                 return null;
 
             return _cells[x, y];
