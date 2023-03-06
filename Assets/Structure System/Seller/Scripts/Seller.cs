@@ -1,27 +1,25 @@
-using System.Collections;
-using System.Numerics;
 using UnityEngine;
 
 namespace Factory
 {
-	public class Seller : Destroyer
-	{
+    public class Seller : Destroyer
+    {
         [SerializeField] private Wallet _wallet;
 
         private void OnEnable()
         {
             Init();
-            ProductGet += OnProductGet;
+            OnProductInside += OnProductGet;
         }
 
         private void OnDisable()
         {
-            ProductGet -= OnProductGet;
+            OnProductInside -= OnProductGet;
         }
 
         private void OnProductGet(Product product)
         {
-            float modifier = Modifer[Level];
+            float modifier = SpeedTickModifers[Level];
 
             if (modifier > 1 || modifier < 0)
                 modifier = 1;
@@ -31,7 +29,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer(Modifer);
+            LimitList(SpeedTickModifers, Level);
         }
     }
 }

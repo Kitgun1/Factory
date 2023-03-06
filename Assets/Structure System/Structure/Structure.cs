@@ -23,8 +23,8 @@ namespace Factory
         private int _lastOutpoutIndex = 0;
         private IEnumerator _tickEnumerator = null;
 
-        public event UnityAction OnProductInside;
-        public event UnityAction OnProductOutside;
+        public event UnityAction<Product> OnProductInside;
+        public event UnityAction<Product> OnProductOutside;
 
         public List<StructurePointData> StructurePoints => Points;
         public StructurePointData? StructurePointWithProduct => this.GetPointWithProduct();
@@ -80,7 +80,7 @@ namespace Factory
                         StructurePointData output = (StructurePointData)outputPointWithProduct;
                         targetInput.Product = output.Product;
                         output.Product = null;
-                        OnProductInside?.Invoke();
+                        OnProductInside?.Invoke(targetInput.Product);
                         targetInput.Product.transform.DOMove(structure.StayPointProduct.position, SpeedTickModifers[Level] / 2);
                     }
                 }
@@ -103,7 +103,7 @@ namespace Factory
                     StructurePointData input = (StructurePointData)inputPointWithProduct;
                     targetOutput.Product = input.Product;
                     input.Product = null;
-                    OnProductOutside?.Invoke();
+                    OnProductOutside?.Invoke(targetOutput.Product);
                     _lastOutpoutIndex++;
                 }
             }

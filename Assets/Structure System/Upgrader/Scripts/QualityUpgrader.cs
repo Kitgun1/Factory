@@ -10,18 +10,18 @@ namespace Factory
         private void OnEnable()
         {
             Init();
-            ProductGet += OnProductGet;
+            OnProductInside += OnProductGet;
         }
 
         private void OnDisable()
         {
-            ProductGet -= OnProductGet;
+            OnProductInside -= OnProductGet;
         }
 
         private void OnValidate()
         {
-            LimitModifer(Modifer);
-            LimitModifer(QualityImprovementAmount);
+            LimitList(SpeedTickModifers, Level);
+            LimitList(QualityImprovementAmount, Level);
         }
 
         protected override void Action(Product product)
