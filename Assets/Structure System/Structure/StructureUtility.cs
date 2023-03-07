@@ -11,17 +11,6 @@ namespace Factory
 
         #region GetPoints
 
-        public static List<StructurePointData> GetPoints(this Structure structure)
-        {
-            List<StructurePointData> result = new List<StructurePointData>();
-
-            if (structure != null)
-                foreach (var point in structure.StructurePoints)
-                    result.Add(point);
-
-            return result;
-        }
-
         public static List<StructurePointData> GetPoints(this Structure structure, PointState pointState)
         {
             List<StructurePointData> result = new List<StructurePointData>();
@@ -62,7 +51,7 @@ namespace Factory
         {
             if (structure != null)
                 foreach (var point in structure.StructurePoints)
-                    if (point.Axis == direction.GetAxis())
+                    if (point.Axis == direction)
                         return point;
             return null;
         }
@@ -71,7 +60,7 @@ namespace Factory
         {
             if (structure != null)
                 foreach (var point in structure.StructurePoints)
-                    if (point.Axis == direction.GetAxis() && point.State == pointState)
+                    if (point.Axis == direction && point.State == pointState)
                         return point;
 
             return null;
@@ -81,7 +70,7 @@ namespace Factory
         {
             if (structure != null)
                 foreach (var point in structure.StructurePoints)
-                    if (point.Axis == direction.GetAxis() && point.State == pointState && point.Priority == priority)
+                    if (point.Axis == direction && point.State == pointState && point.Priority == priority)
                         return point;
 
             return null;
@@ -93,7 +82,7 @@ namespace Factory
 
         public static StructurePointData? GetPointWithProduct(this Structure structure)
         {
-            List<StructurePointData> points = GetPoints(structure);
+            List<StructurePointData> points = structure.StructurePoints;
 
             for (int i = 0; i < points.Count; i++)
             {
@@ -108,7 +97,7 @@ namespace Factory
 
         public static StructurePointData? GetPointWithProduct(this Structure structure, PointState pointState)
         {
-            List<StructurePointData> points = GetPoints(structure);
+            List<StructurePointData> points = structure.StructurePoints;
 
             for (int i = 0; i < points.Count; i++)
             {
@@ -134,13 +123,13 @@ namespace Factory
 
         public static Structure GetStructure(this MapManage map, Vector2Int position, Direction direction)
         {
-            return map.GetStructure(position.x + direction.GetAxis().x, position.y + direction.GetAxis().y);
+            return map.GetStructure(position.x + direction.ToAxis().x, position.y + direction.ToAxis().y);
         }
 
         public static List<Structure> GetStructures(this MapManage map, Vector2Int position)
         {
             List<Structure> result = new List<Structure>();
-            foreach (var axis in MathK.GetAxes())
+            foreach (var axis in MathK.ToAxes())
             {
                 result.Add(map.GetStructure(position.x + axis.x, position.y + axis.y));
             }

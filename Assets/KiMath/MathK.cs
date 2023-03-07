@@ -168,7 +168,7 @@ namespace KiMath
 
         #region Axis
 
-        public static Vector2Int GetAxis(this Direction direction)
+        public static Vector2Int ToAxis(this Direction direction)
         {
             switch (direction)
             {
@@ -185,7 +185,7 @@ namespace KiMath
             }
         }
 
-        public static Direction GetDirection(this Vector2Int direction)
+        public static Direction ToDirection(this Vector2Int direction)
         {
             if (direction == Vector2Int.up) return Direction.Up;
             if (direction == Vector2Int.right) return Direction.Right;
@@ -194,7 +194,7 @@ namespace KiMath
             else throw new NullReferenceException();
         }
 
-        public static List<Vector2Int> GetAxes()
+        public static List<Vector2Int> ToAxes()
         {
             return new List<Vector2Int>
             {

@@ -78,14 +78,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLevel: 1
-  Modifer:
+  SpeedTickModifers:
   - 1
   StayPointProduct: {fileID: 6240185955423862217}
-  StructurePoints:
-    StateUp: -1
-    StateRight: 0
-    StateDown: 1
-    StateLeft: 0
+  Points:
+  - State: -1
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
+  - State: 0
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
+  - State: 1
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
+  - State: 0
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
 --- !u!1001 &2082858361652185471
 PrefabInstance:
   m_ObjectHideFlags: 0

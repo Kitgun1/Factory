@@ -2,6 +2,7 @@ using DG.Tweening;
 using KiMath;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,11 +35,13 @@ namespace Factory
         protected void Init()
         {
             MapManage = MapManage.Instance;
-            LimitList(Points, 4);
             for (int i = 0; i < 4; i++)
             {
-                Points[i] = new StructurePointData((Direction)i);
+                var temp = Points[i];
+                temp.Axis = (Direction)i;
+                Points[i] = temp;
             }
+            StartTickRoutine();
         }
 
         protected void StartTickRoutine()
@@ -69,19 +72,40 @@ namespace Factory
             StructurePointData? outputPointWithProduct = this.GetPointWithProduct(PointState.Output);
             if (outputPointWithProduct != null)
             {
-                Structure structure = MapManage.GetStructure(Position, (outputPointWithProduct.Value.Axis * -1).GetDirection());
-                if (structure.StructurePointWithProduct == null)
+                Structure structure = MapManage.GetStructure(Position, outputPointWithProduct.Value.Axis);
+                if (structure != null)
                 {
-                    StructurePointData? inputPoint = structure.GetPoint((outputPointWithProduct.Value.Axis * -1).GetDirection(), PointState.Input);
-
-                    if (inputPoint != null)
+                    if (structure.StructurePointWithProduct == null)
                     {
-                        StructurePointData targetInput = (StructurePointData)inputPoint;
-                        StructurePointData output = (StructurePointData)outputPointWithProduct;
-                        targetInput.Product = output.Product;
-                        output.Product = null;
-                        OnProductInside?.Invoke(targetInput.Product);
-                        targetInput.Product.transform.DOMove(structure.StayPointProduct.position, SpeedTickModifers[Level] / 2);
+                        StructurePointData? inputPoint = structure.GetPoint((outputPointWithProduct.Value.Axis.ToAxis() * -1).ToDirection(), PointState.Input);
+
+                        if (inputPoint != null)
+                        {
+                            StructurePointData targetInput = (StructurePointData)inputPoint;
+                            StructurePointData output = (StructurePointData)outputPointWithProduct;
+
+                            for (int i = 0; i < structure.Points.Count; i++)
+                            {
+                                if (structure.Points[i].Axis == targetInput.Axis)
+                                {
+                                    StructurePointData temp = output;
+                                    structure.Points[i] = temp;
+                                    structure.Points[i].Product.transform.DOMove(structure.StayPointProduct.position, SpeedTickModifers[Level] / 2);
+                                    OnProductInside?.Invoke(structure.Points[i].Product);
+                                    break;
+                                }
+                            }
+                            for (int i = 0; i < Points.Count; i++)
+                            {
+                                if (Points[i].Axis == output.Axis)
+                                {
+                                    StructurePointData temp = Points[i];
+                                    temp.Product = null;
+                                    Points[i] = temp;
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -101,15 +125,32 @@ namespace Factory
                     if (_lastOutpoutIndex > points.Count) _lastOutpoutIndex = 0;
                     StructurePointData targetOutput = points[_lastOutpoutIndex];
                     StructurePointData input = (StructurePointData)inputPointWithProduct;
-                    targetOutput.Product = input.Product;
-                    input.Product = null;
-                    OnProductOutside?.Invoke(targetOutput.Product);
+                    for (int i = 0; i < Points.Count; i++)
+                    {
+                        if (Points[i].Axis == targetOutput.Axis)
+                        {
+                            StructurePointData temp = Points[i];
+                            temp.Product = targetOutput.Product;
+                            Points[i] = temp;
+                        }
+                    }
+                    for (int i = 0; i < Points.Count; i++)
+                    {
+                        if (Points[i].Axis == input.Axis)
+                        {
+                            StructurePointData temp = Points[i];
+                            temp.Product = null;
+                            Points[i] = temp;
+                            OnProductOutside?.Invoke(Points[i].Product);
+                        }
+                    }
                     _lastOutpoutIndex++;
                 }
             }
+            StartTickRoutine();
         }
 
-        protected void LimitList<T>(List<T> list, int max)
+        protected List<T> LimitList<T>(List<T> list, int max)
         {
             if (list.Count > max)
             {
@@ -123,6 +164,7 @@ namespace Factory
                     tempLevels.Add(default(T));
                 }
             }
+            return list;
         }
     }
 }

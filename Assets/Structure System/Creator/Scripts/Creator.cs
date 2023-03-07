@@ -1,6 +1,6 @@
+using KiMath;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 namespace Factory
@@ -14,13 +14,14 @@ namespace Factory
 
         private IEnumerator _createEnumerator = null;
 
-        public float CurrentMoveRate => SpeedTickModifers[Level];
+        public float CreateSpeed => SpeedTickModifers[Level];
         public ProductTemplate CurrentTemplate => _template;
 
         private void Start()
         {
             Init();
             SetUpgrade();
+            StartRoutine();
         }
 
         public void StartRoutine()
@@ -42,43 +43,69 @@ namespace Factory
 
         private IEnumerator CreateRoutine()
         {
-            while (true)
-            {
-                yield return new WaitForSeconds(CurrentMoveRate);
-                List<StructurePointData> pointsOutput = this.GetPoints(PointState.Output);
+            yield return new WaitForSeconds(CreateSpeed);
 
-                List<StructurePointData> points = this.GetPoints(PointState.Output);
-
-                CreateProduct(points);
-            }
+            CreateProduct();
+            StartRoutine();
         }
 
-        private void CreateProduct(List<StructurePointData> points)
+        private void CreateProduct()
         {
             List<StructurePointData> pointsPriority = this.GetPoints(PointState.Output, PriorityType.Main);
             List<StructurePointData> pointsWithoutPriority = this.GetPoints(PointState.Output, PriorityType.Secendory);
-            List<StructurePointData> resultPoints;
+            List<StructurePointData> points;
+
+            StructurePointData? pointWithProduct = this.GetPointWithProduct();
+            if (pointWithProduct != null) return;
 
             if (pointsPriority.Count > 0)
-                resultPoints = pointsPriority;
+                points = pointsPriority;
             else if (pointsWithoutPriority.Count > 0)
-                resultPoints = pointsWithoutPriority;
+                points = pointsWithoutPriority;
             else return;
 
-            for (int i = 0; i < points.Count; i++)
+            List<Structure> structures = MapManage.GetStructures(Position);
+            List<StructurePointData> anotherPoints = new List<StructurePointData>();
+            for (int i = 0; i < structures.Count; i++)
             {
-                for (int j = 0; j < resultPoints.Count; j++)
+                for (int j = 0; j < points.Count; j++)
                 {
-                    if (resultPoints[i].Axis == points[i].Axis * -1 && resultPoints[i].Product == null && points[i].Product == null)
+                    StructurePointData? anotherPoint = structures[i].GetPoint((points[j].Axis.ToAxis() * -1).ToDirection(), PointState.Input);
+                    if (anotherPoint != null)
                     {
-                        var product = Instantiate(_template.Product, StayPointProduct.position, Quaternion.identity, transform);
-                        var temp = points[i];
-                        temp.Product = product;
-                        points[i] = temp;
-                        OnProductSpawned(product);
-                        return;
+                        //if (point.Value.Product != null) // if another input point empty =>
+                        anotherPoints.Add((StructurePointData)anotherPoint);
                     }
                 }
+            }
+            if (anotherPoints.Count == 0) return;
+
+            List<StructurePointData> relatedOutputs = new List<StructurePointData>();
+            foreach (var anotherPoint in anotherPoints)
+            {
+                foreach (var point in points)
+                {
+                    if (point.Axis.ToAxis() == anotherPoint.Axis.ToAxis() * -1)
+                    {
+                        relatedOutputs.Add(point);
+                    }
+                }
+            }
+
+            for (int i = 0; i < relatedOutputs.Count; i++)
+            {
+                Product product = Instantiate(_template.Product, StayPointProduct.position, Quaternion.identity, transform);
+                for (int j = 0; j < Points.Count; j++)
+                {
+                    if (Points[j].Axis == relatedOutputs[i].Axis)
+                    {
+                        StructurePointData temp = Points[j];
+                        temp.Product = product;
+                        Points[j] = temp;
+                    }
+                }
+                OnProductSpawned(product);
+                return;
             }
         }
 
@@ -97,8 +124,8 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitList(SpeedTickModifers, MaxLevel);
-            LimitList(_materials, MaxLevel);
+            SpeedTickModifers = LimitList(SpeedTickModifers, MaxLevel);
+            _materials = LimitList(_materials, MaxLevel);
         }
     }
 }

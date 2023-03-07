@@ -47,18 +47,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxLevel: 5
-  Modifer:
+  SpeedTickModifers:
   - 1
   - 1
   - 1
   - 1
   - 1
   StayPointProduct: {fileID: 7670910326813834611}
-  StructurePoints:
-    StateUp: -1
-    StateRight: 0
-    StateDown: 0
-    StateLeft: 0
+  Points:
+  - State: -1
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
+  - State: 0
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
+  - State: 0
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
+  - State: 0
+    Priority: 0
+    Product: {fileID: 0}
+    Axis: 0
   _renderer: {fileID: 9058174732944837511}
   _materials:
   - {fileID: 2100000, guid: 26eefbe3f4ed6a543a2a96e50dc2193b, type: 2}

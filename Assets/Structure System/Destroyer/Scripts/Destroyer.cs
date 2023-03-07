@@ -15,7 +15,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitList(SpeedTickModifers, MaxLevel);
+            SpeedTickModifers = LimitList(SpeedTickModifers, MaxLevel);
         }
     }
 }

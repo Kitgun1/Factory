@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Factory
 {
     public class VisualUpgrader : Interacter
@@ -17,7 +15,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitList(SpeedTickModifers, Level);
+            SpeedTickModifers = LimitList(SpeedTickModifers, Level);
         }
 
         protected override void Action(Product product)

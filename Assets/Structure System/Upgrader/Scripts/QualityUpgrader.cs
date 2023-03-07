@@ -20,8 +20,8 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitList(SpeedTickModifers, Level);
-            LimitList(QualityImprovementAmount, Level);
+            SpeedTickModifers = LimitList(SpeedTickModifers, Level);
+            QualityImprovementAmount = LimitList(QualityImprovementAmount, Level);
         }
 
         protected override void Action(Product product)
