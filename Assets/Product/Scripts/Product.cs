@@ -13,7 +13,7 @@ namespace Factory
             Templtate = template;
             Cloned = cloned;
             Level = 0;
-
+            
             UpdateInfo();
         }
 
