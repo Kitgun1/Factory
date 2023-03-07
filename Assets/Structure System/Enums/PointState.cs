@@ -1,6 +1,6 @@
 namespace Factory
 {
-    public enum StructurePointState
+    public enum PointState
     {
         Output = -1,
         Close = 0,

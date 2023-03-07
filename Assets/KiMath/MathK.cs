@@ -1,5 +1,6 @@
 using Factory;
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
@@ -161,6 +162,47 @@ namespace KiMath
                 return alphabet[degree].ToString();
             else
                 return "MANY";
+        }
+
+        #endregion
+
+        #region Axis
+
+        public static Vector2Int ToAxis(this Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return new Vector2Int(0, 1);
+                case Direction.Down:
+                    return new Vector2Int(0, -1);
+                case Direction.Left:
+                    return new Vector2Int(-1, 0);
+                case Direction.Right:
+                    return new Vector2Int(1, 0);
+                default:
+                    return new Vector2Int(0, 0);
+            }
+        }
+
+        public static Direction ToDirection(this Vector2Int direction)
+        {
+            if (direction == Vector2Int.up) return Direction.Up;
+            if (direction == Vector2Int.right) return Direction.Right;
+            if (direction == Vector2Int.down) return Direction.Down;
+            if (direction == Vector2Int.left) return Direction.Left;
+            else throw new NullReferenceException();
+        }
+
+        public static List<Vector2Int> ToAxes()
+        {
+            return new List<Vector2Int>
+            {
+                Vector2Int.up,
+                Vector2Int.right,
+                Vector2Int.down,
+                Vector2Int.left
+            };
         }
 
         #endregion

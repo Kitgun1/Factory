@@ -1,11 +1,7 @@
-using UnityEngine;
-
 namespace Factory
 {
     public class Conveyor : Structure
     {
-        public float CurrentMoveRate() => Modifer[Level];
-
         private void Start()
         {
             Init();
@@ -13,7 +9,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer(Modifer);
+            SpeedTickModifers = LimitList(SpeedTickModifers, MaxLevel);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Factory
 
             if (_map.CheckPointInBorder(x, y))
             {
-                structure = Instantiate(structure, _nearCell, Quaternion.identity, transform);
+                structure = Instantiate(structure, _nearCell + new Vector3(0f, -0.5f, 0), Quaternion.identity, transform);
                 _map.SetStructure(structure, x, y);
                 return true;
             }
@@ -83,8 +83,8 @@ namespace Factory
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawCube(_nearCell, Vector3.one);
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(_nearCell - new Vector3(0f, 0.4f, 0f), new Vector3(1f, 0.2f, 1f));
         }
     }
 }

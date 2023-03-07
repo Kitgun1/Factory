@@ -23,7 +23,7 @@ namespace Factory
 
         private void OnValidate()
         {
-            LimitModifer(Modifer);
+            SpeedTickModifers = LimitList(SpeedTickModifers, MaxLevel);
         }
     }
 }
