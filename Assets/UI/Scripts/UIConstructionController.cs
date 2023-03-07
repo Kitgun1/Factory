@@ -20,34 +20,37 @@ namespace Factory
         [BoxGroup("Tittle"), SerializeField] private TMP_Text _structureName;
         [BoxGroup("Tittle"), SerializeField] private List<UIStructureData> _structureDatas;
 
-        [SerializeField] private PlayerInput _player;
+        [SerializeField] private Input _input;
 
         private List<UIModifer> _modifers = new List<UIModifer>();
 
+        private void Awake()
+        {
+            _input = new Input();
+        }
 
         private void OnEnable()
         {
-            _player.OnHotKeyPress += OnHotKeyPressed;
+            _input.Enable();
+            _input.PlayerInput.CellMenu.performed += ctx => OpenStructurePanel();
+            _input.PlayerInput.CloseAnyMenu.performed += ctx => CloseStructurePanel();
         }
 
         private void OnDisable()
         {
-            _player.OnHotKeyPress -= OnHotKeyPressed;
+            _input.Disable();
+            _input.PlayerInput.CellMenu.performed -= ctx => OpenStructurePanel();
+            _input.PlayerInput.CloseAnyMenu.performed -= ctx => CloseStructurePanel();
         }
 
-        private void OnHotKeyPressed(PlayerActionType actionType)
+        private void OpenStructurePanel()
         {
-            switch (actionType)
-            {
-                case PlayerActionType.OpenCellProperty:
-                    _structureProperty.SetActive(true);
-                    break;
-                case PlayerActionType.CloseCellProperty:
-                    _structureProperty.SetActive(false);
-                    break;
-                default:
-                    break;
-            }
+            _structureProperty.SetActive(!_structureProperty.activeSelf);
+        }
+
+        private void CloseStructurePanel()
+        {
+            _structureProperty.SetActive(false);
         }
 
         public void AddModifer(string name, string description, float priceUpgrade, SliderData<float> slider)

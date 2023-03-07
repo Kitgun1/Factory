@@ -7,6 +7,6 @@ namespace Factory
             TargetPriority = FilterProduct(product) ? PriorityType.Main : PriorityType.Secendory;
         }
 
-        protected abstract bool FilterProduct(Product product); 
+        protected abstract bool FilterProduct(Product product);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,13 +14,17 @@ namespace Factory
 
         private EntityMovement _entityMovement;
         private Vector2 _direction = Vector2.zero;
+        private Input _input;
 
         public event UnityAction<PlayerActionType> OnHotKeyPress;
 
         [SerializeField] private MapManage _mapManage;
+
         private void Awake()
         {
             _entityMovement = new EntityMovement(_movementData);
+            _input = new Input();
+            _input.Enable();
         }
 
         private void Update()
@@ -28,13 +33,13 @@ namespace Factory
 
             _animation.SetAnimationFloat(AnimationParamType.Speed, GetSpeed(_direction));
 
-            foreach (var hotKey in _hotKeys)
-            {
-                if (Input.GetKeyDown(hotKey.KeyCode))
-                {
-                    OnHotKeyPress?.Invoke(hotKey.Action);
-                }
-            }
+            //foreach (var hotKey in _hotKeys)
+            //{
+            //    if (Input.GetKeyDown(hotKey.KeyCode))
+            //    {
+            //        OnHotKeyPress?.Invoke(hotKey.Action);
+            //    }
+            //}
         }
 
         private void FixedUpdate()
@@ -50,7 +55,7 @@ namespace Factory
             switch (type)
             {
                 case PlatformType.Desctop:
-                    return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                    return _input.PlayerInput.Move.ReadValue<Vector2>();
                 case PlatformType.Mobile:
                     return _joystick.Direction;
                 default:
