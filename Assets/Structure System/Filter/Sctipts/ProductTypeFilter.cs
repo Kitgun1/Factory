@@ -6,6 +6,17 @@ namespace Factory
     {
         [SerializeField] ProductTypeFilterData _data;
 
+        private void OnEnable()
+        {
+            Init();
+            ProductInside += OnProductGet;
+        }
+
+        private void OnDisable()
+        {
+            ProductInside -= OnProductGet;
+        }
+
         protected void InitFilter(ProductTypeFilterData data)
         {
             _data = data;

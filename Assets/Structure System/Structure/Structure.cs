@@ -2,7 +2,6 @@ using DG.Tweening;
 using KiMath;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,13 +18,14 @@ namespace Factory
         protected Quaternion Quaternion;
         protected Vector2Int Position;
         protected MapManage MapManage;
+        protected TickManage TickManage;
         protected PriorityType TargetPriority = PriorityType.Main;
 
         private int _lastOutpoutIndex = 0;
         private IEnumerator _tickEnumerator = null;
 
-        public event UnityAction<Product> OnProductInside;
-        public event UnityAction<Product> OnProductOutside;
+        public event UnityAction<Product> ProductInside;
+        public event UnityAction<Product> ProductOutside;
 
         public List<StructurePointData> StructurePoints => Points;
         public StructurePointData? StructurePointWithProduct => this.GetPointWithProduct();
@@ -35,6 +35,7 @@ namespace Factory
         protected void Init()
         {
             MapManage = MapManage.Instance;
+            TickManage = TickManage.Instance;
             for (int i = 0; i < 4; i++)
             {
                 var temp = Points[i];
@@ -91,7 +92,7 @@ namespace Factory
                                     StructurePointData temp = output;
                                     structure.Points[i] = temp;
                                     structure.Points[i].Product.transform.DOMove(structure.StayPointProduct.position, SpeedTickModifers[Level] / 2);
-                                    OnProductInside?.Invoke(structure.Points[i].Product);
+                                    ProductInside?.Invoke(structure.Points[i].Product);
                                     break;
                                 }
                             }
@@ -141,7 +142,7 @@ namespace Factory
                             StructurePointData temp = Points[i];
                             temp.Product = null;
                             Points[i] = temp;
-                            OnProductOutside?.Invoke(Points[i].Product);
+                            ProductOutside?.Invoke(Points[i].Product);
                         }
                     }
                     _lastOutpoutIndex++;

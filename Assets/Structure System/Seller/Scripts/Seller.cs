@@ -1,28 +1,31 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Factory
 {
     public class Seller : Destroyer
     {
+        [field: SerializeField] private List<float> SellPriceModifier;
         [SerializeField] private Wallet _wallet;
 
         private void OnEnable()
         {
             Init();
-            OnProductInside += OnProductGet;
+            ProductInside += OnProductGet;
         }
 
         private void OnDisable()
         {
-            OnProductInside -= OnProductGet;
+            ProductInside -= OnProductGet;
         }
 
-        private void OnProductGet(Product product)
+        protected override void OnProductGet(Product product)
         {
-            float modifier = SpeedTickModifers[Level];
+            float modifier = SellPriceModifier[Level];
 
             if (modifier > 1 || modifier < 0)
-                modifier = 1;
+                modifier = 0;
+            modifier += 1;
 
             _wallet.CurrencyTransfer(CurrencyType.Coin, (int)(product.Price() * modifier));
         }
@@ -30,6 +33,7 @@ namespace Factory
         private void OnValidate()
         {
             SpeedTickModifers = LimitList(SpeedTickModifers, Level);
+            SellPriceModifier = LimitList(SellPriceModifier, Level);
         }
     }
 }

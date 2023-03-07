@@ -27,6 +27,6 @@ namespace Factory
                 Quality = value;
         }
 
-        public override double Price() => (_template.Price(Level) * (Quality * 0.01f));
+        public override double Price() => (_template.Price(Level) * ((Quality * 0.01f) + 1));
     }
 }

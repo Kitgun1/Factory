@@ -8,12 +8,12 @@ namespace Factory
         private void OnEnable()
         {
             Init();
-            ProductGet += OnProductGet;
+            ProductInside += OnProductGet;
         }
 
         private void OnDisable()
         {
-            ProductGet -= OnProductGet;
+            ProductInside -= OnProductGet;
         }
 
         protected virtual void OnProductGet(Product product)

@@ -5,12 +5,12 @@ namespace Factory
         private void OnEnable()
         {
             Init();
-            OnProductInside += OnProductGet;
+            ProductInside += OnProductGet;
         }
 
         private void OnDisable()
         {
-            OnProductInside -= OnProductGet;
+            ProductInside -= OnProductGet;
         }
 
         private void OnValidate()

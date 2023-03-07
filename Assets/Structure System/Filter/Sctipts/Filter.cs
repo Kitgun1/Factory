@@ -4,14 +4,7 @@ namespace Factory
 	{
         protected void OnProductGet(Product product)
         {
-            if (FilterProduct(product))
-            {
-                // отправить по пути
-            }
-            else
-            {
-                // отправить в обход
-            }
+            TargetPriority = FilterProduct(product) ? PriorityType.Main : PriorityType.Secendory;
         }
 
         protected abstract bool FilterProduct(Product product); 
